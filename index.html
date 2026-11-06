@@ -110,6 +110,15 @@
 
   /* ---------- Chat ---------- */
   .chat { display:flex; flex-direction:column; height:calc(100vh - 150px); max-width:780px; margin:0 auto; }
+  .chatwrap { display:grid; grid-template-columns:220px 1fr; gap:16px; }
+  .convs { display:flex; flex-direction:column; gap:4px; height:calc(100vh - 150px); overflow-y:auto; }
+  .convs .new { margin-bottom:6px; }
+  .conv { display:flex; align-items:center; gap:4px; padding:8px 10px; border-radius:8px; cursor:pointer; color:var(--muted); }
+  .conv:hover { background:var(--col); color:var(--text); }
+  .conv.active { background:var(--soft); color:var(--accent); font-weight:500; }
+  .conv span { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .conv button { border:none; background:none; cursor:pointer; color:var(--faint); opacity:0; }
+  .conv:hover button { opacity:1; }
   .msgs { flex:1; overflow-y:auto; padding:4px 2px 12px; display:flex; flex-direction:column; gap:12px; }
   .msg { display:flex; gap:10px; max-width:88%; }
   .msg .av { width:30px; height:30px; flex:none; border-radius:50%; display:grid; place-items:center; font-size:13px; background:linear-gradient(135deg,var(--accent),#a855f7); color:#fff; }
@@ -165,7 +174,7 @@
     .board { grid-template-columns:1fr; }
     .card { cursor:default; } .acts { opacity:1; } .mv { display:flex; }
     .quick { flex-wrap:wrap; } .toolbar input { width:100%; }
-    .chat { height:calc(100vh - 170px); }
+    .chat { height:calc(100vh - 230px); } .chatwrap { grid-template-columns:1fr; } .convs { height:auto; max-height:120px; flex-direction:row; flex-wrap:wrap; } .conv button { opacity:1; }
   }
 </style>
 </head>
@@ -221,19 +230,19 @@
 
     <!-- CHAT -->
     <section data-page="chat" hidden>
+      <div class="chatwrap"><div class="convs" id="convs"></div>
       <div class="chat">
         <div class="msgs" id="msgs"></div>
         <div class="hints">
           <button class="btn sm" data-hint="Tóm tắt hôm nay giúp tôi: việc nào đến hạn, quá hạn, nên làm gì trước?">☀ Tóm tắt hôm nay</button>
           <button class="btn sm" data-hint="Chọn 3 việc quan trọng nhất tôi nên làm hôm nay và giải thích ngắn.">★ 3 việc quan trọng</button>
           <button class="btn sm" data-hint="Đánh giá tiến độ tuần này của tôi và gợi ý cải thiện.">📈 Đánh giá tuần</button>
-          <button class="btn sm ghost" id="clearChat">Xoá lịch sử</button>
         </div>
         <form class="chatbar" id="chatForm">
           <textarea name="q" placeholder="VD: Thứ 6 nộp báo cáo đối soát tháng 10, gấp. Mai gọi ngân hàng hỏi giao dịch lỗi."></textarea>
           <button class="btn primary" id="sendBtn">Gửi</button>
         </form>
-      </div>
+      </div></div>
     </section>
 
     <!-- REPORT -->
@@ -326,8 +335,10 @@ const fmt = d => d ? d.slice(0,10).split('-').reverse().join('/') : '';
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const $ = s => document.querySelector(s);
 
-const blank = { tasks:[], logs:[], chat:[], updatedAt:0 };
-const normalize = s => { s = { ...blank, ...s }; s.tasks.forEach(t => { t.history ??= []; t.subs ??= []; t.project ??= ''; t.note ??= ''; t.due ??= ''; t.created ??= nowISO(); }); return s; };
+const blank = { tasks:[], logs:[], convs:[], curConv:null, updatedAt:0 };
+const normalize = s => { s = { ...blank, ...s };
+  if (s.chat) { if (s.chat.length) s.convs.unshift({ id: crypto.randomUUID(), title: s.chat.find(m => m.role === 'user')?.text.slice(0, 40) || 'Cuộc trò chuyện', msgs: s.chat, at: nowISO() }); delete s.chat; }
+  if (!s.convs.some(c => c.id === s.curConv)) s.curConv = s.convs[0]?.id || null; s.tasks.forEach(t => { t.history ??= []; t.subs ??= []; t.project ??= ''; t.note ??= ''; t.due ??= ''; t.created ??= nowISO(); }); return s; };
 let state = normalize(JSON.parse(localStorage.getItem(KEY) || localStorage.getItem('mywork.v1') || '{}'));
 let cfg = JSON.parse(localStorage.getItem(CFG) || '{}');
 const saveCfg = () => localStorage.setItem(CFG, JSON.stringify(cfg));
@@ -335,7 +346,8 @@ const saveCfg = () => localStorage.setItem(CFG, JSON.stringify(cfg));
 let pushRemote = null;
 function save() {
   state.updatedAt = Date.now();
-  if (state.chat.length > 200) state.chat = state.chat.slice(-200);
+  state.convs = state.convs.filter(c => c.msgs.length).slice(0, 50);
+  state.convs.forEach(c => { if (c.msgs.length > 200) c.msgs = c.msgs.slice(-200); });
   localStorage.setItem(KEY, JSON.stringify(state));
   pushRemote?.();
 }
@@ -473,7 +485,7 @@ dlg.addEventListener('close', () => {
 /* ========== AI chat (Gemini) ========== */
 const SYSTEM = `Bạn là trợ lý quản lý công việc cá nhân, trả lời tiếng Việt, ngắn gọn, thân thiện.
 Nhiệm vụ: (1) tách lời người dùng thành task khi họ nhắc việc cần làm; (2) đề xuất cập nhật task hiện có (đổi trạng thái, ưu tiên, hạn, đánh dấu top3) khi họ báo đã làm/đổi kế hoạch; (3) trả lời câu hỏi về tiến độ dựa trên danh sách task.
-Quy tắc: chỉ dùng id có trong danh sách khi cập nhật; ngày dạng YYYY-MM-DD, tự quy đổi "mai", "thứ 6"... theo ngày hôm nay; priority là high|med|low; status là todo|doing|done. Task chỉ được tạo khi người dùng bấm Áp dụng, nên trong reply hãy nói "mình đề xuất..." chứ không nói "đã thêm". Nếu có giờ cụ thể (vd 5h sáng) thì ghi vào note. Không bịa task. Nếu không có gì để tạo/cập nhật thì để mảng rỗng.
+Quy tắc: chỉ dùng id có trong danh sách khi cập nhật; ngày dạng YYYY-MM-DD, tự quy đổi "mai", "thứ 6"... theo ngày hôm nay; priority là high|med|low; status là todo|doing|done. Task chỉ được tạo khi người dùng bấm Áp dụng, nên trong reply hãy nói "mình đề xuất..." chứ không nói "đã thêm". Nếu có giờ cụ thể (vd 5h sáng) thì ghi vào note. Một việc chỉ được coi là đã có khi nằm trong "Danh sách task" bên dưới; không suy ra từ lịch sử chat. Không bịa task. Nếu không có gì để tạo/cập nhật thì để mảng rỗng.
 Luôn trả về JSON đúng dạng: {"reply": string, "create": [{"title","priority","due","project","note"}], "update": [{"id","status"?,"priority"?,"due"?,"top3"?}]}`;
 
 function context() {
@@ -484,7 +496,7 @@ function context() {
 
 async function askGemini(text) {
   if (!cfg.apiKey) throw new Error('Chưa có Gemini API key. Vào Cài đặt để nhập.');
-  const history = state.chat.slice(-8).map(m => ({ role: m.role, parts: [{ text: m.text }] }));
+  const history = state.chat.slice(-8).map(m => ({ role: m.role, parts: [{ text: m.text + (m.role === 'model' && (m.create?.length || m.update?.length) && !m.applied ? '\n[Ghi chú hệ thống: đề xuất này CHƯA được người dùng áp dụng]' : '') + (m.role === 'model' && m.applied && !m.create?.length && !m.update?.length ? '\n[Ghi chú hệ thống: người dùng đã bỏ qua đề xuất này]' : '') }] }));
   const body = {
     systemInstruction: { parts: [{ text: SYSTEM + '\n\n' + context() }] },
     contents: [...history, { role: 'user', parts: [{ text }] }],
@@ -511,7 +523,22 @@ async function askGemini(text) {
 }
 
 const bubble = (role, html) => `<div class="msg ${role}">${role === 'model' ? '<div class="av">✦</div>' : ''}<div class="bub">${html}</div></div>`;
+const conv = () => state.convs.find(c => c.id === state.curConv);
+Object.defineProperty(state, 'chat', { get: () => conv()?.msgs || [], configurable: true });
+function renderConvs() {
+  $('#convs').innerHTML = '<button class="btn primary new" id="newConv">＋ Chat mới</button>' + state.convs.map(c =>
+    `<div class="conv ${c.id === state.curConv ? 'active' : ''}" data-conv="${c.id}"><span title="${esc(c.title)}">${esc(c.title)}</span><button data-delconv="${c.id}" title="Xoá">✕</button></div>`).join('');
+}
+$('#convs').addEventListener('click', e => {
+  if (chatBusy) return;
+  const del = e.target.dataset.delconv;
+  if (del) { if (confirm('Xoá cuộc trò chuyện này?')) { state.convs = state.convs.filter(c => c.id !== del); if (state.curConv === del) state.curConv = state.convs[0]?.id || null; save(); renderChat(); } return; }
+  if (e.target.closest('#newConv')) { state.curConv = null; chatError = ''; renderChat(); $('#chatForm').elements.q.focus(); return; }
+  const id = e.target.closest('[data-conv]')?.dataset.conv;
+  if (id) { state.curConv = id; chatError = ''; save(); renderChat(); }
+});
 function renderChat(pending) {
+  renderConvs();
   const box = $('#msgs');
   if (!state.chat.length && !pending && !chatError) {
     box.innerHTML = bubble('model', `Chào bạn! 👋 Cứ kể những việc cần làm, mình sẽ tách thành task để bạn duyệt. Bạn cũng có thể hỏi về tiến độ, việc quá hạn, nên ưu tiên gì.${cfg.apiKey ? '' : '\n\n⚠ Hãy nhập Gemini API key trong Cài đặt trước.'}`);
@@ -556,14 +583,15 @@ let chatBusy = false, chatError = '';
 async function send(text) {
   text = text.trim(); if (!text || chatBusy) return;
   const last = state.chat.at(-1);
-  if (last?.role === 'user' && last.text === text) state.chat.pop(); // retry of an unanswered message
+  if (last?.role === 'user' && last.text === text) conv().msgs.pop(); // retry of an unanswered message
   chatBusy = true; chatError = '';
   $('#sendBtn').disabled = true; $('#sendBtn').textContent = '…';
   renderChat(text);
   const t0 = Date.now(), tick = setInterval(() => { const el = document.getElementById('thinking'); if (el) el.textContent = 'Đang suy nghĩ… ' + Math.round((Date.now() - t0) / 1000) + 's'; }, 1000);
   try {
     const r = await askGemini(text);
-    state.chat.push({ role: 'user', text, at: nowISO() },
+    if (!conv()) { const nc = { id: crypto.randomUUID(), title: text.slice(0, 40), msgs: [], at: nowISO() }; state.convs.unshift(nc); state.curConv = nc.id; }
+    conv().msgs.push({ role: 'user', text, at: nowISO() },
       { role: 'model', text: r.reply || '(không có trả lời)', create: r.create || [], update: r.update || [], at: nowISO() });
     save();
   } catch (err) {
@@ -578,7 +606,6 @@ $('#msgs').addEventListener('click', e => { if (e.target.dataset.retry !== undef
 $('#chatForm').addEventListener('submit', e => { e.preventDefault(); const q = e.target.elements.q; const v = q.value; q.value = ''; send(v); });
 $('#chatForm').elements.q.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('#chatForm').requestSubmit(); } });
 document.querySelectorAll('[data-hint]').forEach(b => b.addEventListener('click', () => send(b.dataset.hint)));
-$('#clearChat').addEventListener('click', () => { if (confirm('Xoá toàn bộ lịch sử chat?')) { state.chat = []; save(); renderChat(); } });
 
 /* ========== Report ========== */
 function renderReport() {
@@ -657,7 +684,7 @@ $('#importFile').addEventListener('change', async e => {
   const file = e.target.files[0]; if (!file) return;
   try {
     const d = JSON.parse(await file.text()); if (!Array.isArray(d.tasks)) throw 0;
-    if (confirm('Thay toàn bộ dữ liệu hiện tại bằng file này?')) { state = normalize(d); save(); renderAll(); }
+    if (confirm('Thay toàn bộ dữ liệu hiện tại bằng file này?')) { state = normalize(d); Object.defineProperty(state, 'chat', { get: () => conv()?.msgs || [], configurable: true }); save(); renderAll(); }
   } catch { alert('File không hợp lệ.'); }
   e.target.value = '';
 });
@@ -699,7 +726,7 @@ async function initFirebase() {
       const remote = snap.data();
       if (!remote) { write(); return; }
       if (remote.updatedAt > state.updatedAt) {
-        state = normalize(JSON.parse(remote.data));
+        state = normalize(JSON.parse(remote.data)); Object.defineProperty(state, 'chat', { get: () => conv()?.msgs || [], configurable: true });
         localStorage.setItem(KEY, JSON.stringify(state)); renderAll();
       } else if (remote.updatedAt < state.updatedAt) write();
       status.textContent = '✓ Đồng bộ · ' + user.email;
