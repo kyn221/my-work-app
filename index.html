@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4f46e5">
+<title>My Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f7f7f8; --side:#fbfbfc; --card:#ffffff; --col:#f1f2f4; --line:#e7e8ec; --line2:#d9dbe1;
+    --text:#18181b; --muted:#71717a; --faint:#a1a1aa;
+    --accent:#4f46e5; --accent2:#6366f1; --soft:#eef0ff;
+    --red:#e5484d; --redbg:#fdecec; --amber:#b45309; --amberbg:#fef3c7; --green:#15803d; --greenbg:#e3f6ea;
+    --shadow:0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+    --shadow2:0 8px 24px rgba(16,24,40,.12);
+    --r:12px;
+  }
+  body.dark {
+    --bg:#0e0f13; --side:#121318; --card:#181a20; --col:#14161b; --line:#262932; --line2:#323643;
+    --text:#ececf1; --muted:#9a9cab; --faint:#6b6e7c;
+    --accent:#7c83ff; --accent2:#8b91ff; --soft:#20234a;
+    --redbg:#3a1d20; --amber:#f5b453; --amberbg:#3a2c14; --green:#4ade80; --greenbg:#15301f;
+    --shadow:0 1px 2px rgba(0,0,0,.4); --shadow2:0 8px 24px rgba(0,0,0,.5);
+  }
+  [hidden] { display:none !important; }
+  * { box-sizing:border-box; }
+  html, body { height:100%; }
+  body { margin:0; font-family:Inter, system-ui, "Segoe UI", sans-serif; font-size:14px; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
+  input, select, textarea, button { font:inherit; color:inherit; }
+  input, select, textarea { padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--card); outline:none; transition:border-color .15s, box-shadow .15s; }
+  input:focus, select:focus, textarea:focus { border-color:var(--accent2); box-shadow:0 0 0 3px var(--soft); }
+  .btn { padding:8px 14px; border:1px solid var(--line); border-radius:8px; background:var(--card); cursor:pointer; font-weight:500; transition:background .15s, border-color .15s; }
+  .btn:hover { border-color:var(--line2); background:var(--col); }
+  .btn.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .btn.primary:hover { background:var(--accent2); }
+  .btn.sm { padding:4px 10px; font-size:12px; }
+  .btn.ghost { border-color:transparent; background:none; }
+  .muted { color:var(--muted); font-size:13px; }
+
+  /* ---------- Layout ---------- */
+  .app { display:grid; grid-template-columns:232px 1fr; height:100%; }
+  aside { background:var(--side); border-right:1px solid var(--line); display:flex; flex-direction:column; padding:18px 12px; gap:4px; overflow-y:auto; }
+  .logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:16px; padding:0 8px 16px; }
+  .logo i { width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg,var(--accent),#a855f7); display:grid; place-items:center; color:#fff; font-style:normal; font-size:14px; }
+  #nav { display:flex; flex-direction:column; gap:2px; }
+  #nav button { display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none; padding:8px 10px; border-radius:8px; cursor:pointer; color:var(--muted); font-weight:500; }
+  #nav button:hover { background:var(--col); color:var(--text); }
+  #nav button.active { background:var(--soft); color:var(--accent); }
+  #nav .ic { width:18px; text-align:center; }
+  .side-title { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--faint); padding:18px 10px 6px; }
+  #sideProj button { display:flex; justify-content:space-between; width:100%; border:none; background:none; padding:6px 10px; border-radius:8px; cursor:pointer; color:var(--muted); text-align:left; }
+  #sideProj button:hover, #sideProj button.active { background:var(--col); color:var(--text); }
+  #sideProj .n { font-size:12px; color:var(--faint); }
+  .side-foot { margin-top:auto; padding:12px 8px 0; border-top:1px solid var(--line); display:flex; align-items:center; gap:8px; }
+  .side-foot .muted { flex:1; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .content { overflow-y:auto; }
+  main { padding:28px 32px 40px; max-width:1280px; margin:0 auto; }
+  .page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
+  .page-head h1 { font-size:22px; margin:0; font-weight:700; letter-spacing:-.01em; }
+  .page-head .sub { color:var(--muted); margin-top:4px; }
+
+  .banner { background:var(--amberbg); color:var(--amber); border-radius:10px; padding:10px 14px; margin-bottom:18px; display:flex; gap:10px; align-items:center; font-size:13px; }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:16px 18px; margin-bottom:16px; box-shadow:var(--shadow); }
+  .box > b:first-child { display:block; margin-bottom:10px; }
+
+  /* ---------- Board ---------- */
+  .chips { display:flex; gap:8px; flex-wrap:wrap; }
+  .chip { display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background:var(--card); border:1px solid var(--line); font-size:13px; color:var(--muted); }
+  .chip b { color:var(--text); font-size:14px; }
+  .chip.bad b { color:var(--red); }
+  .quick { display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:6px 6px 6px 14px; box-shadow:var(--shadow); margin-bottom:14px; transition:border-color .15s, box-shadow .15s; }
+  .quick:focus-within { border-color:var(--accent2); box-shadow:0 0 0 3px var(--soft); }
+  .quick input, .quick select { border:none; box-shadow:none !important; padding:8px 6px; background:transparent; }
+  .quick input[name=title] { flex:1; min-width:120px; font-size:15px; }
+  .quick .pill { background:var(--col); border-radius:8px; }
+  .toolbar { display:flex; gap:8px; align-items:center; margin-bottom:18px; flex-wrap:wrap; }
+  .toolbar input { width:240px; }
+  .board { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; align-items:start; }
+  .col { background:var(--col); border-radius:var(--r); padding:12px; min-height:320px; transition:outline .1s; }
+  .col.over { outline:2px dashed var(--accent2); outline-offset:-2px; }
+  .col-head { display:flex; align-items:center; gap:8px; margin:2px 4px 12px; font-weight:600; }
+  .dot { width:8px; height:8px; border-radius:50%; }
+  .count { margin-left:auto; font-size:12px; color:var(--muted); background:var(--card); border-radius:999px; padding:1px 8px; border:1px solid var(--line); }
+  .empty { border:1.5px dashed var(--line2); border-radius:10px; padding:22px 10px; text-align:center; color:var(--faint); font-size:13px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:10px; cursor:grab; box-shadow:var(--shadow); transition:box-shadow .15s, transform .15s; }
+  .card:hover { box-shadow:var(--shadow2); transform:translateY(-1px); }
+  .card:hover .acts { opacity:1; }
+  .card.top3 { box-shadow:inset 3px 0 0 #f59e0b, var(--shadow); }
+  .card.done .t { color:var(--muted); text-decoration:line-through; }
+  .card .top { display:flex; gap:8px; align-items:flex-start; }
+  .card .t { font-weight:500; line-height:1.4; word-break:break-word; flex:1; }
+  .acts { display:flex; gap:2px; opacity:0; transition:opacity .15s; }
+  .acts button { border:none; background:none; cursor:pointer; color:var(--muted); width:24px; height:24px; border-radius:6px; }
+  .acts button:hover { background:var(--col); color:var(--text); }
+  .meta { display:flex; gap:6px; font-size:12px; color:var(--muted); flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .tag { padding:2px 8px; border-radius:6px; font-size:11px; font-weight:600; }
+  .p-high { background:var(--redbg); color:var(--red); } .p-med { background:var(--amberbg); color:var(--amber); } .p-low { background:var(--greenbg); color:var(--green); }
+  .proj { background:var(--soft); color:var(--accent); }
+  .due { display:inline-flex; gap:4px; align-items:center; }
+  .overdue { color:var(--red); font-weight:600; }
+  .progress { height:4px; background:var(--col); border-radius:4px; margin-top:10px; overflow:hidden; }
+  .progress span { display:block; height:100%; background:var(--accent2); }
+  .sub { font-size:13px; margin-top:8px; display:flex; flex-direction:column; gap:3px; }
+  .sub label { display:flex; gap:8px; align-items:center; cursor:pointer; }
+  .sub input { accent-color:var(--accent); padding:0; }
+  .note { font-size:12px; color:var(--muted); margin-top:8px; white-space:pre-wrap; line-height:1.45; }
+  .mv { display:none; gap:6px; margin-top:10px; }
+
+  /* ---------- Chat ---------- */
+  .chat { display:flex; flex-direction:column; height:calc(100vh - 150px); max-width:780px; margin:0 auto; }
+  .msgs { flex:1; overflow-y:auto; padding:4px 2px 12px; display:flex; flex-direction:column; gap:12px; }
+  .msg { display:flex; gap:10px; max-width:88%; }
+  .msg .av { width:30px; height:30px; flex:none; border-radius:50%; display:grid; place-items:center; font-size:13px; background:linear-gradient(135deg,var(--accent),#a855f7); color:#fff; }
+  .msg .bub { padding:10px 14px; border-radius:14px; white-space:pre-wrap; line-height:1.55; background:var(--card); border:1px solid var(--line); box-shadow:var(--shadow); }
+  .msg.user { align-self:flex-end; }
+  .msg.user .bub { background:var(--accent); color:#fff; border-color:var(--accent); border-bottom-right-radius:4px; }
+  .msg.model .bub { border-top-left-radius:4px; }
+  .prop { margin-top:10px; background:var(--col); border-radius:10px; padding:10px 12px; }
+  .prop .it { font-size:13px; margin:4px 0; }
+  .prop .row { justify-content:flex-start; margin-top:8px; }
+  .hints { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+  .hints .btn { border-radius:999px; }
+  .chatbar { display:flex; gap:8px; align-items:flex-end; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:8px; box-shadow:var(--shadow); }
+  .chatbar:focus-within { border-color:var(--accent2); box-shadow:0 0 0 3px var(--soft); }
+  .chatbar textarea { flex:1; resize:none; height:46px; border:none; box-shadow:none !important; background:transparent; }
+
+  /* ---------- Report ---------- */
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-bottom:16px; }
+  .stat { background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:16px; box-shadow:var(--shadow); }
+  .stat b { font-size:26px; display:block; margin-top:6px; letter-spacing:-.02em; }
+  .bars { display:flex; align-items:flex-end; gap:8px; height:160px; }
+  .bar { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; font-size:11px; color:var(--muted); height:100%; justify-content:flex-end; }
+  .bar span { width:100%; max-width:34px; background:var(--accent2); border-radius:6px 6px 2px 2px; min-height:3px; }
+  table { width:100%; border-collapse:collapse; }
+  td, th { text-align:left; padding:9px 6px; border-bottom:1px solid var(--line); }
+  th { font-size:12px; color:var(--muted); font-weight:500; }
+  tr:last-child td { border-bottom:none; }
+
+  /* ---------- Forms / dialog ---------- */
+  .narrow { max-width:720px; margin:0 auto; }
+  .narrow textarea { width:100%; min-height:64px; }
+  label.f { display:block; font-size:13px; color:var(--muted); margin:12px 0 6px; font-weight:500; }
+  .narrow input:not([type=file]), .narrow select { width:100%; }
+  .entry h3 { margin:0 0 8px; font-size:14px; }
+  .entry p { margin:4px 0; white-space:pre-wrap; line-height:1.5; }
+  .row { display:flex; gap:8px; justify-content:flex-end; margin-top:16px; flex-wrap:wrap; }
+  dialog { border:none; border-radius:16px; padding:22px; width:460px; max-width:94vw; background:var(--card); color:var(--text); box-shadow:var(--shadow2); }
+  dialog::backdrop { background:rgba(15,15,25,.4); backdrop-filter:blur(2px); }
+  dialog h2 { margin:0 0 4px; font-size:17px; }
+  dialog input:not([type=checkbox]), dialog select, dialog textarea { width:100%; }
+  .check { display:flex; gap:8px; align-items:center; margin-top:12px; cursor:pointer; }
+  .check input { accent-color:var(--accent); }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width:860px) {
+    .app { grid-template-columns:1fr; }
+    aside { position:fixed; bottom:0; left:0; right:0; z-index:10; flex-direction:row; padding:6px; border-right:none; border-top:1px solid var(--line); }
+    .logo, .side-title, #sideProj, .side-foot .muted { display:none; }
+    #nav { flex-direction:row; flex:1; justify-content:space-around; }
+    #nav button { flex-direction:column; gap:2px; font-size:11px; padding:6px 4px; width:auto; }
+    .side-foot { margin:0; padding:0; border:none; }
+    main { padding:18px 14px 90px; }
+    .board { grid-template-columns:1fr; }
+    .card { cursor:default; } .acts { opacity:1; } .mv { display:flex; }
+    .quick { flex-wrap:wrap; } .toolbar input { width:100%; }
+    .chat { height:calc(100vh - 170px); }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="logo"><i>✓</i>My Work</div>
+    <nav id="nav">
+      <button data-view="board" class="active"><span class="ic">▦</span>Công việc</button>
+      <button data-view="chat"><span class="ic">✦</span>Trợ lý AI</button>
+      <button data-view="report"><span class="ic">▤</span>Báo cáo</button>
+      <button data-view="log"><span class="ic">✎</span>Nhật ký</button>
+      <button data-view="settings"><span class="ic">⚙</span>Cài đặt</button>
+    </nav>
+    <div class="side-title">Dự án</div>
+    <div id="sideProj"></div>
+    <div class="side-foot">
+      <span class="muted" id="syncStatus">Chỉ lưu trên máy</span>
+      <button class="btn sm ghost" id="themeBtn" title="Sáng / Tối">◐</button>
+    </div>
+  </aside>
+
+  <div class="content">
+  <main>
+    <div class="banner" id="backupBanner" hidden>
+      <span style="flex:1">Đã hơn 7 ngày bạn chưa sao lưu dữ liệu.</span>
+      <button class="btn sm" data-export>Sao lưu ngay</button>
+    </div>
+
+    <!-- BOARD -->
+    <section data-page="board">
+      <div class="page-head">
+        <div><h1 id="pageTitle">Hôm nay</h1><div class="sub" id="pageSub"></div></div>
+        <div class="chips" id="chips"></div>
+      </div>
+      <form class="quick" id="addForm">
+        <span style="color:var(--accent);font-size:18px">＋</span>
+        <input name="title" placeholder="Thêm việc mới… (Enter để lưu)" required autocomplete="off">
+        <input name="project" placeholder="# Dự án" list="projList" class="pill" style="width:120px">
+        <select name="priority" class="pill">
+          <option value="med">Vừa</option><option value="high">Cao</option><option value="low">Thấp</option>
+        </select>
+        <input name="due" type="date" title="Hạn chót" class="pill">
+        <button class="btn primary">Thêm</button>
+      </form>
+      <div class="toolbar">
+        <input id="search" placeholder="🔍  Tìm việc…">
+        <select id="projFilter"><option value="">Tất cả dự án</option></select>
+      </div>
+      <datalist id="projList"></datalist>
+      <div class="board" id="board"></div>
+    </section>
+
+    <!-- CHAT -->
+    <section data-page="chat" hidden>
+      <div class="chat">
+        <div class="msgs" id="msgs"></div>
+        <div class="hints">
+          <button class="btn sm" data-hint="Tóm tắt hôm nay giúp tôi: việc nào đến hạn, quá hạn, nên làm gì trước?">☀ Tóm tắt hôm nay</button>
+          <button class="btn sm" data-hint="Chọn 3 việc quan trọng nhất tôi nên làm hôm nay và giải thích ngắn.">★ 3 việc quan trọng</button>
+          <button class="btn sm" data-hint="Đánh giá tiến độ tuần này của tôi và gợi ý cải thiện.">📈 Đánh giá tuần</button>
+          <button class="btn sm ghost" id="clearChat">Xoá lịch sử</button>
+        </div>
+        <form class="chatbar" id="chatForm">
+          <textarea name="q" placeholder="VD: Thứ 6 nộp báo cáo đối soát tháng 10, gấp. Mai gọi ngân hàng hỏi giao dịch lỗi."></textarea>
+          <button class="btn primary" id="sendBtn">Gửi</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section data-page="report" hidden>
+      <div class="page-head"><div><h1>Báo cáo</h1><div class="sub">Theo dõi tiến độ của bạn</div></div></div>
+      <div class="stats" id="stats"></div>
+      <div class="box"><b>Việc hoàn thành 14 ngày qua</b><div class="bars" id="bars"></div></div>
+      <div class="box"><b>Theo dự án</b><table id="projTable"></table></div>
+      <div class="box"><b>Việc quá hạn</b><table id="lateTable"></table></div>
+    </section>
+
+    <!-- LOG -->
+    <section data-page="log" hidden class="narrow">
+      <div class="page-head"><div><h1>Nhật ký cuối ngày</h1><div class="sub">3 dòng để đầu óc nhẹ nhàng</div></div></div>
+      <form id="logForm" class="box">
+        <label class="f">✅ Đã xong hôm nay</label><textarea name="done"></textarea>
+        <label class="f">⏳ Đang chờ ai / vướng gì</label><textarea name="waiting"></textarea>
+        <label class="f">➡ Mai làm gì</label><textarea name="tomorrow"></textarea>
+        <div class="row"><button class="btn primary">Lưu nhật ký</button></div>
+      </form>
+      <div id="logList"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section data-page="settings" hidden class="narrow">
+      <div class="page-head"><div><h1>Cài đặt</h1></div></div>
+      <div class="box">
+        <b>Trợ lý AI (Gemini)</b>
+        <label class="f">API key – lấy tại aistudio.google.com, chỉ lưu trên máy này</label>
+        <input id="apiKey" type="password" placeholder="AIza...">
+        <label class="f">Model</label>
+        <input id="model" placeholder="gemini-3.8-flash">
+        <div class="row"><button class="btn primary" id="saveAi">Lưu</button></div>
+      </div>
+      <div class="box">
+        <b>Đồng bộ laptop ↔ điện thoại (Firebase)</b>
+        <p class="muted">Dán firebaseConfig từ Firebase Console (JSON hoặc object JS). Xem README.md.</p>
+        <textarea id="fbConfig" rows="7" style="width:100%" placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","appId":"..."}'></textarea>
+        <div class="row">
+          <button class="btn" id="logoutBtn" hidden>Đăng xuất</button>
+          <button class="btn" id="saveFb">Lưu & kết nối</button>
+          <button class="btn primary" id="loginBtn" hidden>Đăng nhập Google</button>
+        </div>
+      </div>
+      <div class="box">
+        <b>Sao lưu</b>
+        <p class="muted" id="lastBackup"></p>
+        <div class="row" style="justify-content:flex-start">
+          <button class="btn" data-export>Xuất file JSON</button>
+          <button class="btn" id="importBtn">Nhập file JSON</button>
+          <input type="file" id="importFile" accept=".json" hidden>
+        </div>
+      </div>
+    </section>
+  </main>
+  </div>
+</div>
+
+<dialog id="editDlg">
+  <form method="dialog" id="editForm">
+    <h2>Chi tiết công việc</h2>
+    <label class="f">Tiêu đề</label><input name="title" required>
+    <label class="f">Dự án / Nhãn</label><input name="project" list="projList">
+    <div style="display:flex;gap:10px">
+      <div style="flex:1"><label class="f">Ưu tiên</label>
+        <select name="priority"><option value="high">Cao</option><option value="med">Vừa</option><option value="low">Thấp</option></select></div>
+      <div style="flex:1"><label class="f">Hạn chót</label><input name="due" type="date"></div>
+    </div>
+    <label class="check"><input type="checkbox" name="top3"> ★ Thuộc "3 việc quan trọng hôm nay"</label>
+    <label class="f">Checklist – mỗi dòng một việc con, thêm "[x] " nếu đã xong</label><textarea name="subs" rows="4"></textarea>
+    <label class="f">Ghi chú</label><textarea name="note" rows="3"></textarea>
+    <p class="muted" id="histText"></p>
+    <div class="row">
+      <button class="btn" value="cancel">Huỷ</button>
+      <button class="btn primary" value="save">Lưu</button>
+    </div>
+  </form>
+</dialog>
+
+<script type="module">
+/* ========== State & storage ========== */
+const KEY = 'mywork.v2', CFG = 'mywork.cfg';
+const COLS = [['todo','Cần làm','#a1a1aa'],['doing','Đang làm','#6366f1'],['done','Xong','#22c55e']];
+const ST = Object.fromEntries(COLS.map(c => [c[0], c[1]]));
+const PRI = { high:['Cao','p-high',0], med:['Vừa','p-med',1], low:['Thấp','p-low',2] };
+const today = () => new Date().toLocaleDateString('en-CA');
+const nowISO = () => new Date().toISOString();
+const daysAgo = n => { const d = new Date(); d.setDate(d.getDate() - n); return d.toLocaleDateString('en-CA'); };
+const fmt = d => d ? d.slice(0,10).split('-').reverse().join('/') : '';
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $ = s => document.querySelector(s);
+
+const blank = { tasks:[], logs:[], chat:[], updatedAt:0 };
+const normalize = s => { s = { ...blank, ...s }; s.tasks.forEach(t => { t.history ??= []; t.subs ??= []; t.project ??= ''; t.note ??= ''; t.due ??= ''; t.created ??= nowISO(); }); return s; };
+let state = normalize(JSON.parse(localStorage.getItem(KEY) || localStorage.getItem('mywork.v1') || '{}'));
+let cfg = JSON.parse(localStorage.getItem(CFG) || '{}');
+const saveCfg = () => localStorage.setItem(CFG, JSON.stringify(cfg));
+
+let pushRemote = null;
+function save() {
+  state.updatedAt = Date.now();
+  if (state.chat.length > 200) state.chat = state.chat.slice(-200);
+  localStorage.setItem(KEY, JSON.stringify(state));
+  pushRemote?.();
+}
+function renderAll() { renderBoard(); renderChat(); if (!$('[data-page=report]').hidden) renderReport(); renderBackup(); }
+
+/* ========== Tasks ========== */
+function newTask(o) {
+  const t = { id: crypto.randomUUID(), title: String(o.title).trim(), priority: PRI[o.priority] ? o.priority : 'med',
+    due: o.due || '', project: (o.project || '').trim(), note: o.note || '', subs: [], top3: false,
+    status: 'todo', created: nowISO(), doneAt: null, history: [{ at: nowISO(), to: 'todo' }] };
+  state.tasks.push(t); return t;
+}
+function setStatus(t, status) {
+  if (!t || !ST[status] || t.status === status) return;
+  t.history.push({ at: nowISO(), from: t.status, to: status });
+  t.status = status;
+  t.doneAt = status === 'done' ? today() : null;
+}
+const projects = () => [...new Set(state.tasks.map(t => t.project).filter(Boolean))].sort();
+
+function renderSide() {
+  const cur = $('#projFilter').value, open = state.tasks.filter(t => t.status !== 'done');
+  $('#sideProj').innerHTML = [['', 'Tất cả', open.length], ...projects().map(p => [p, '# ' + p, open.filter(t => t.project === p).length])]
+    .map(([v, l, n]) => `<button data-proj="${esc(v)}" class="${v === cur ? 'active' : ''}"><span>${esc(l)}</span><span class="n">${n}</span></button>`).join('');
+}
+$('#sideProj').addEventListener('click', e => {
+  const b = e.target.closest('[data-proj]'); if (!b) return;
+  $('#projFilter').value = b.dataset.proj; show('board'); renderBoard();
+});
+
+function renderBoard() {
+  const projs = projects();
+  $('#projList').innerHTML = projs.map(p => `<option value="${esc(p)}">`).join('');
+  const pf = $('#projFilter'), cur = pf.value;
+  pf.innerHTML = '<option value="">Tất cả dự án</option>' + projs.map(p => `<option ${p === cur ? 'selected' : ''}>${esc(p)}</option>`).join('');
+  const q = $('#search').value.trim().toLowerCase();
+  const board = $('#board'); board.innerHTML = '';
+  for (const [key, label, color] of COLS) {
+    const items = state.tasks
+      .filter(t => t.status === key && (!pf.value || t.project === pf.value)
+        && (!q || `${t.title} ${t.note} ${t.project}`.toLowerCase().includes(q)))
+      .filter(t => key !== 'done' || t.doneAt >= daysAgo(14))
+      .sort((a, b) => (!!b.top3 - !!a.top3) || PRI[a.priority][2] - PRI[b.priority][2] || (a.due || '9').localeCompare(b.due || '9'));
+    const col = document.createElement('div');
+    col.className = 'col'; col.dataset.status = key;
+    col.innerHTML = `<div class="col-head"><span class="dot" style="background:${color}"></span>${label}<span class="count">${items.length}</span></div>`
+      + (items.length ? '' : `<div class="empty">${key === 'todo' ? 'Chưa có việc nào. Thêm ở ô phía trên ✨' : 'Kéo việc vào đây'}</div>`);
+    for (const t of items) {
+      const late = t.due && t.status !== 'done' && t.due < today();
+      const dueToday = t.due === today() && t.status !== 'done';
+      const sd = t.subs.filter(s => s.done).length;
+      const star = t.top3 && t.status !== 'done';
+      col.insertAdjacentHTML('beforeend', `
+        <div class="card ${star ? 'top3' : ''} ${t.status === 'done' ? 'done' : ''}" draggable="true" data-id="${t.id}">
+          <div class="top">
+            <div class="t">${star ? '<span style="color:#f59e0b">★</span> ' : ''}${esc(t.title)}</div>
+            <span class="acts"><button data-act="edit" title="Sửa">✎</button><button data-act="del" title="Xoá">🗑</button></span>
+          </div>
+          ${t.note ? `<div class="note">${esc(t.note)}</div>` : ''}
+          ${t.subs.length ? `<div class="sub">${t.subs.map((s, i) => `<label><input type="checkbox" data-sub="${i}" ${s.done ? 'checked' : ''}>${esc(s.text)}</label>`).join('')}</div>
+            <div class="progress"><span style="width:${100 * sd / t.subs.length}%"></span></div>` : ''}
+          <div class="meta">
+            <span class="tag ${PRI[t.priority][1]}">${PRI[t.priority][0]}</span>
+            ${t.project ? `<span class="tag proj"># ${esc(t.project)}</span>` : ''}
+            ${t.due ? `<span class="due ${late ? 'overdue' : ''}" ${dueToday ? 'style="color:var(--amber);font-weight:600"' : ''}>📅 ${late ? 'Trễ · ' : dueToday ? 'Hôm nay · ' : ''}${fmt(t.due)}</span>` : ''}
+            ${t.subs.length ? `<span style="margin-left:auto">☑ ${sd}/${t.subs.length}</span>` : ''}
+          </div>
+          <div class="mv">${COLS.filter(c => c[0] !== key).map(c => `<button class="btn sm" data-move="${c[0]}">→ ${c[1]}</button>`).join('')}</div>
+        </div>`);
+    }
+    board.appendChild(col);
+  }
+  const open = state.tasks.filter(t => t.status !== 'done');
+  const late = open.filter(t => t.due && t.due < today()).length;
+  const d = new Date();
+  $('#pageTitle').textContent = pf.value ? '# ' + pf.value : 'Hôm nay';
+  $('#pageSub').textContent = d.toLocaleDateString('vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
+  $('#chips').innerHTML = [
+    ['✅', 'xong hôm nay', state.tasks.filter(t => t.doneAt === today()).length, ''],
+    ['📅', 'đến hạn', open.filter(t => t.due === today()).length, ''],
+    ['⚠', 'quá hạn', late, late ? 'bad' : ''],
+    ['○', 'đang mở', open.length, '']
+  ].map(([i, l, n, c]) => `<span class="chip ${c}">${i} <b>${n}</b> ${l}</span>`).join('');
+  renderSide();
+}
+
+$('#addForm').addEventListener('submit', e => {
+  e.preventDefault(); const f = e.target;
+  newTask({ title: f.elements.title.value, priority: f.elements.priority.value, due: f.elements.due.value, project: f.elements.project.value || $('#projFilter').value });
+  save(); f.elements.title.value = ''; f.elements.due.value = ''; renderBoard(); f.elements.title.focus();
+});
+$('#search').addEventListener('input', renderBoard);
+$('#projFilter').addEventListener('change', renderBoard);
+
+const board = $('#board');
+const taskOf = el => state.tasks.find(t => t.id === el.closest('.card')?.dataset.id);
+board.addEventListener('dragstart', e => { const c = e.target.closest('.card'); if (c) e.dataTransfer.setData('text', c.dataset.id); });
+board.addEventListener('dragover', e => { const c = e.target.closest('.col'); if (c) { e.preventDefault(); c.classList.add('over'); } });
+board.addEventListener('dragleave', e => { const c = e.target.closest('.col'); if (c && !c.contains(e.relatedTarget)) c.classList.remove('over'); });
+board.addEventListener('drop', e => {
+  const c = e.target.closest('.col'); if (!c) return; e.preventDefault(); c.classList.remove('over');
+  setStatus(state.tasks.find(t => t.id === e.dataTransfer.getData('text')), c.dataset.status); save(); renderBoard();
+});
+board.addEventListener('change', e => {
+  if (e.target.dataset.sub === undefined) return;
+  const t = taskOf(e.target); t.subs[e.target.dataset.sub].done = e.target.checked; save(); renderBoard();
+});
+
+const dlg = $('#editDlg'), ef = $('#editForm').elements; let editing = null;
+board.addEventListener('click', e => {
+  const t = taskOf(e.target); if (!t) return;
+  const mv = e.target.closest('[data-move]');
+  if (mv) { setStatus(t, mv.dataset.move); save(); renderBoard(); return; }
+  const act = e.target.closest('[data-act]')?.dataset.act;
+  if (act === 'del' && confirm(`Xoá "${t.title}"?`)) { state.tasks = state.tasks.filter(x => x !== t); save(); renderBoard(); }
+  if (act === 'edit') {
+    editing = t;
+    ef.title.value = t.title; ef.project.value = t.project; ef.priority.value = t.priority; ef.due.value = t.due;
+    ef.top3.checked = !!t.top3; ef.note.value = t.note;
+    ef.subs.value = t.subs.map(s => (s.done ? '[x] ' : '') + s.text).join('\n');
+    $('#histText').textContent = 'Lịch sử: ' + t.history.map(h => `${fmt(h.at)} ${h.from ? ST[h.from] + ' → ' : 'Tạo · '}${ST[h.to]}`).join('  |  ');
+    dlg.showModal();
+  }
+});
+dlg.addEventListener('close', () => {
+  if (dlg.returnValue === 'save' && editing) {
+    Object.assign(editing, { title: ef.title.value.trim() || editing.title, project: ef.project.value.trim(), priority: ef.priority.value,
+      due: ef.due.value, top3: ef.top3.checked, note: ef.note.value,
+      subs: ef.subs.value.split('\n').map(l => l.trim()).filter(Boolean).map(l => ({ done: /^\[x\]\s*/i.test(l), text: l.replace(/^\[x\]\s*/i, '') })) });
+    save(); renderBoard();
+  }
+  editing = null;
+});
+
+/* ========== AI chat (Gemini) ========== */
+const SYSTEM = `Bạn là trợ lý quản lý công việc cá nhân, trả lời tiếng Việt, ngắn gọn, thân thiện.
+Nhiệm vụ: (1) tách lời người dùng thành task khi họ nhắc việc cần làm; (2) đề xuất cập nhật task hiện có (đổi trạng thái, ưu tiên, hạn, đánh dấu top3) khi họ báo đã làm/đổi kế hoạch; (3) trả lời câu hỏi về tiến độ dựa trên danh sách task.
+Quy tắc: chỉ dùng id có trong danh sách khi cập nhật; ngày dạng YYYY-MM-DD, tự quy đổi "mai", "thứ 6"... theo ngày hôm nay; priority là high|med|low; status là todo|doing|done. Không bịa task. Nếu không có gì để tạo/cập nhật thì để mảng rỗng.
+Luôn trả về JSON đúng dạng: {"reply": string, "create": [{"title","priority","due","project","note"}], "update": [{"id","status"?,"priority"?,"due"?,"top3"?}]}`;
+
+function context() {
+  const list = state.tasks.filter(t => t.status !== 'done' || t.doneAt >= daysAgo(7))
+    .map(t => `${t.id}|${t.title}|${t.status}|${t.priority}|hạn:${t.due || '-'}|dự án:${t.project || '-'}|top3:${!!t.top3}${t.doneAt ? '|xong:' + t.doneAt : ''}`).join('\n');
+  return `Hôm nay: ${today()} (${new Date().toLocaleDateString('vi-VN', { weekday: 'long' })}).\nDanh sách task (id|tiêu đề|trạng thái|ưu tiên|hạn|dự án|top3):\n${list || '(trống)'}`;
+}
+
+async function askGemini(text) {
+  if (!cfg.apiKey) throw new Error('Chưa có Gemini API key. Vào Cài đặt để nhập.');
+  const history = state.chat.slice(-16).map(m => ({ role: m.role, parts: [{ text: m.text }] }));
+  const body = {
+    systemInstruction: { parts: [{ text: SYSTEM + '\n\n' + context() }] },
+    contents: [...history, { role: 'user', parts: [{ text }] }],
+    generationConfig: { responseMimeType: 'application/json', temperature: 0.4 }
+  };
+  const model = cfg.model || 'gemini-3.8-flash';
+  const call = async b => {
+    const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 60000);
+    try {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': cfg.apiKey }, body: JSON.stringify(b), signal: ctrl.signal
+      });
+      return [r, await r.json()];
+    } catch (e) {
+      throw new Error(e.name === 'AbortError' ? 'Gemini phản hồi quá 60 giây. Thử lại, hoặc đổi sang model nhẹ hơn trong Cài đặt.' : 'Không kết nối được Gemini: ' + e.message);
+    } finally { clearTimeout(timer); }
+  };
+  // Ask for light thinking (much faster); fall back if this model doesn't accept the option.
+  let [res, data] = await call({ ...body, generationConfig: { ...body.generationConfig, thinkingConfig: { thinkingLevel: 'low' } } });
+  if (res.status === 400 && /thinking/i.test(data.error?.message || '')) [res, data] = await call(body);
+  if (!res.ok) throw new Error(data.error?.message || 'Lỗi gọi Gemini (' + res.status + ')');
+  const raw = data.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '{}';
+  try { return JSON.parse(raw.replace(/^```json\s*|```$/g, '')); } catch { return { reply: raw, create: [], update: [] }; }
+}
+
+const bubble = (role, html) => `<div class="msg ${role}">${role === 'model' ? '<div class="av">✦</div>' : ''}<div class="bub">${html}</div></div>`;
+function renderChat(pending) {
+  const box = $('#msgs');
+  if (!state.chat.length && !pending && !chatError) {
+    box.innerHTML = bubble('model', `Chào bạn! 👋 Cứ kể những việc cần làm, mình sẽ tách thành task để bạn duyệt. Bạn cũng có thể hỏi về tiến độ, việc quá hạn, nên ưu tiên gì.${cfg.apiKey ? '' : '\n\n⚠ Hãy nhập Gemini API key trong Cài đặt trước.'}`);
+    return;
+  }
+  box.innerHTML = state.chat.map((m, i) => {
+    let prop = '';
+    const c = m.create || [], u = (m.update || []).filter(x => state.tasks.some(t => t.id === x.id));
+    if (m.role === 'model' && (c.length || u.length)) {
+      prop = `<div class="prop">
+        ${c.map(x => `<div class="it">＋ <b>${esc(x.title)}</b> · ${PRI[x.priority]?.[0] || 'Vừa'}${x.due ? ' · hạn ' + fmt(x.due) : ''}${x.project ? ' · #' + esc(x.project) : ''}</div>`).join('')}
+        ${u.map(x => { const t = state.tasks.find(t => t.id === x.id);
+          return `<div class="it">✎ <b>${esc(t.title)}</b>: ${[x.status && '→ ' + ST[x.status], x.priority && 'ưu tiên ' + PRI[x.priority]?.[0], x.due && 'hạn ' + fmt(x.due), x.top3 !== undefined && (x.top3 ? '★ top 3' : 'bỏ top 3')].filter(Boolean).join(', ')}</div>`; }).join('')}
+        <div class="row">${m.applied ? '<span class="muted">✓ Đã áp dụng</span>' : `<button class="btn sm primary" data-apply="${i}">Áp dụng</button><button class="btn sm" data-skip="${i}">Bỏ qua</button>`}</div>
+      </div>`;
+    }
+    return bubble(m.role, esc(m.text) + prop);
+  }).join('')
+    + (pending ? bubble('user', esc(pending)) + bubble('model', '<span class="muted">Đang suy nghĩ…</span>') : '')
+    + (chatError ? bubble('model', `<span class="overdue">⚠ ${esc(chatError)}</span> <button class="btn sm" data-retry>Thử lại</button>`) : '')
+    + (!pending && !chatError && state.chat.at(-1)?.role === 'user' ? bubble('model', '<span class="muted">Tin nhắn này chưa có phản hồi.</span> <button class="btn sm" data-retry>Gửi lại</button>') : '');
+  box.scrollTop = box.scrollHeight;
+}
+
+$('#msgs').addEventListener('click', e => {
+  const ap = e.target.dataset.apply, sk = e.target.dataset.skip;
+  if (sk !== undefined) { Object.assign(state.chat[sk], { applied: true, create: [], update: [] }); save(); renderChat(); }
+  if (ap === undefined) return;
+  const m = state.chat[ap];
+  (m.create || []).filter(x => x.title).forEach(x => newTask(x));
+  (m.update || []).forEach(x => {
+    const t = state.tasks.find(t => t.id === x.id); if (!t) return;
+    if (x.status) setStatus(t, x.status);
+    if (PRI[x.priority]) t.priority = x.priority;
+    if (x.due) t.due = x.due;
+    if (x.top3 !== undefined) t.top3 = !!x.top3;
+  });
+  m.applied = true; save(); renderAll();
+});
+
+let chatBusy = false, chatError = '';
+async function send(text) {
+  text = text.trim(); if (!text || chatBusy) return;
+  const last = state.chat.at(-1);
+  if (last?.role === 'user' && last.text === text) state.chat.pop(); // retry of an unanswered message
+  chatBusy = true; chatError = '';
+  $('#sendBtn').disabled = true; $('#sendBtn').textContent = '…';
+  renderChat(text);
+  try {
+    const r = await askGemini(text);
+    state.chat.push({ role: 'user', text, at: nowISO() },
+      { role: 'model', text: r.reply || '(không có trả lời)', create: r.create || [], update: r.update || [], at: nowISO() });
+    save();
+  } catch (err) {
+    chatError = err.message || String(err);
+    $('#chatForm').elements.q.value = text;
+  }
+  chatBusy = false;
+  $('#sendBtn').disabled = false; $('#sendBtn').textContent = 'Gửi';
+  renderChat();
+}
+$('#msgs').addEventListener('click', e => { if (e.target.dataset.retry !== undefined) { const q = $('#chatForm').elements.q, last = state.chat.at(-1); const t = chatError ? q.value : last?.role === 'user' ? last.text : q.value; q.value = ''; send(t); } });
+$('#chatForm').addEventListener('submit', e => { e.preventDefault(); const q = e.target.elements.q; const v = q.value; q.value = ''; send(v); });
+$('#chatForm').elements.q.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('#chatForm').requestSubmit(); } });
+document.querySelectorAll('[data-hint]').forEach(b => b.addEventListener('click', () => send(b.dataset.hint)));
+$('#clearChat').addEventListener('click', () => { if (confirm('Xoá toàn bộ lịch sử chat?')) { state.chat = []; save(); renderChat(); } });
+
+/* ========== Report ========== */
+function renderReport() {
+  const T = state.tasks, open = T.filter(t => t.status !== 'done');
+  const done7 = T.filter(t => t.doneAt >= daysAgo(6));
+  const late = open.filter(t => t.due && t.due < today());
+  const withDue = done7.filter(t => t.due);
+  const onTime = withDue.length ? Math.round(100 * withDue.filter(t => t.doneAt <= t.due).length / withDue.length) + '%' : '—';
+  const lead = done7.map(t => (new Date(t.doneAt) - new Date(t.created.slice(0, 10))) / 864e5);
+  const avg = lead.length ? (lead.reduce((a, b) => a + b, 0) / lead.length).toFixed(1) + ' ngày' : '—';
+  $('#stats').innerHTML = [['✅ Xong 7 ngày qua', done7.length], ['○ Đang mở', open.length], ['⚠ Quá hạn', late.length], ['🎯 Đúng hạn', onTime], ['⏱ Thời gian xử lý TB', avg]]
+    .map(([k, v]) => `<div class="stat"><span class="muted">${k}</span><b>${v}</b></div>`).join('');
+  const days = [...Array(14)].map((_, i) => daysAgo(13 - i));
+  const counts = days.map(d => T.filter(t => t.doneAt === d).length), max = Math.max(1, ...counts);
+  $('#bars').innerHTML = days.map((d, i) => `<div class="bar" title="${counts[i]} việc">${counts[i] || ''}<span style="height:${85 * counts[i] / max}%"></span>${d.slice(8)}/${d.slice(5, 7)}</div>`).join('');
+  const byP = {}; T.forEach(t => { const p = t.project || '(không nhãn)'; byP[p] ??= [0, 0]; byP[p][t.status === 'done' ? 1 : 0]++; });
+  $('#projTable').innerHTML = Object.keys(byP).length ? '<tr><th>Dự án</th><th>Đang mở</th><th>Đã xong</th></tr>' + Object.entries(byP).map(([p, [o, d]]) => `<tr><td>${esc(p)}</td><td>${o}</td><td>${d}</td></tr>`).join('') : '<tr><td class="muted">Chưa có dữ liệu.</td></tr>';
+  $('#lateTable').innerHTML = late.length ? '<tr><th>Việc</th><th>Hạn</th><th>Trễ</th></tr>' + late.map(t => `<tr><td>${esc(t.title)}</td><td>${fmt(t.due)}</td><td class="overdue">${Math.round((new Date(today()) - new Date(t.due)) / 864e5)} ngày</td></tr>`).join('') : '<tr><td class="muted">Không có việc quá hạn 🎉</td></tr>';
+}
+
+/* ========== Daily log ========== */
+function openLog() {
+  const f = $('#logForm').elements, ex = state.logs.find(l => l.date === today());
+  f.done.value = ex ? ex.done : state.tasks.filter(t => t.doneAt === today()).map(t => '- ' + t.title).join('\n');
+  f.waiting.value = ex?.waiting || ''; f.tomorrow.value = ex?.tomorrow || '';
+  $('#logList').innerHTML = [...state.logs].sort((a, b) => b.date.localeCompare(a.date)).map(l => `<div class="box entry"><h3>${fmt(l.date)}</h3>
+    <p>✅ ${esc(l.done) || '—'}</p><p>⏳ ${esc(l.waiting) || '—'}</p><p>➡ ${esc(l.tomorrow) || '—'}</p></div>`).join('');
+}
+$('#logForm').addEventListener('submit', e => {
+  e.preventDefault(); const f = e.target.elements;
+  state.logs = state.logs.filter(l => l.date !== today()).concat({ date: today(), done: f.done.value, waiting: f.waiting.value, tomorrow: f.tomorrow.value });
+  save(); openLog();
+});
+
+/* ========== Navigation, theme, settings, backup ========== */
+function show(view) {
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  document.querySelectorAll('[data-page]').forEach(p => p.hidden = p.dataset.page !== view);
+  if (view === 'report') renderReport();
+  if (view === 'log') openLog();
+  if (view === 'chat') renderChat();
+}
+document.querySelectorAll('#nav button').forEach(b => b.addEventListener('click', () => show(b.dataset.view)));
+
+const applyTheme = () => document.body.classList.toggle('dark', !!cfg.dark);
+$('#themeBtn').addEventListener('click', () => { cfg.dark = !cfg.dark; saveCfg(); applyTheme(); });
+
+$('#apiKey').value = cfg.apiKey || ''; $('#model').value = cfg.model || '';
+$('#saveAi').addEventListener('click', () => { cfg.apiKey = $('#apiKey').value.trim(); cfg.model = $('#model').value.trim(); saveCfg(); alert('Đã lưu.'); renderChat(); });
+
+function renderBackup() {
+  $('#backupBanner').hidden = !(state.tasks.length && (!cfg.lastBackup || cfg.lastBackup < daysAgo(7)));
+  $('#lastBackup').textContent = cfg.lastBackup ? 'Lần sao lưu gần nhất: ' + fmt(cfg.lastBackup) : 'Chưa sao lưu lần nào.';
+}
+document.querySelectorAll('[data-export]').forEach(b => b.addEventListener('click', () => {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' }));
+  a.download = `mywork-backup-${today()}.json`; a.click();
+  cfg.lastBackup = today(); saveCfg(); renderBackup();
+}));
+$('#importBtn').addEventListener('click', () => $('#importFile').click());
+$('#importFile').addEventListener('change', async e => {
+  const file = e.target.files[0]; if (!file) return;
+  try {
+    const d = JSON.parse(await file.text()); if (!Array.isArray(d.tasks)) throw 0;
+    if (confirm('Thay toàn bộ dữ liệu hiện tại bằng file này?')) { state = normalize(d); save(); renderAll(); }
+  } catch { alert('File không hợp lệ.'); }
+  e.target.value = '';
+});
+
+/* ========== Firebase sync (optional) ========== */
+$('#fbConfig').value = cfg.firebase ? JSON.stringify(cfg.firebase, null, 2) : '';
+$('#saveFb').addEventListener('click', () => {
+  const txt = $('#fbConfig').value.trim();
+  if (!txt) { delete cfg.firebase; saveCfg(); location.reload(); return; }
+  try {
+    const body = txt.slice(txt.indexOf('{'), txt.lastIndexOf('}') + 1);
+    const obj = JSON.parse(body.replace(/([{,]\s*)([A-Za-z_]\w*)\s*:/g, '$1"$2":').replace(/'/g, '"').replace(/,\s*}/g, '}'));
+    if (!obj.apiKey || !obj.projectId) throw 0;
+    cfg.firebase = obj; saveCfg(); location.reload();
+  } catch { alert('Config không hợp lệ. Cần có apiKey và projectId.'); }
+});
+
+async function initFirebase() {
+  if (!cfg.firebase) return;
+  const V = 'https://www.gstatic.com/firebasejs/10.12.2/';
+  const [{ initializeApp }, A, F] = await Promise.all([import(V + 'firebase-app.js'), import(V + 'firebase-auth.js'), import(V + 'firebase-firestore.js')]);
+  const app = initializeApp(cfg.firebase), auth = A.getAuth(app), db = F.getFirestore(app);
+  const status = $('#syncStatus');
+  status.textContent = 'Chưa đăng nhập'; $('#loginBtn').hidden = false;
+  $('#loginBtn').addEventListener('click', () => A.signInWithPopup(auth, new A.GoogleAuthProvider()).catch(e => alert(e.message)));
+  $('#logoutBtn').addEventListener('click', () => A.signOut(auth).then(() => location.reload()));
+  let unsub = null, timer = null;
+  A.onAuthStateChanged(auth, user => {
+    unsub?.(); pushRemote = null;
+    if (!user) { status.textContent = 'Chưa đăng nhập'; $('#loginBtn').hidden = false; $('#logoutBtn').hidden = true; return; }
+    $('#loginBtn').hidden = true; $('#logoutBtn').hidden = false;
+    const ref = F.doc(db, 'users', user.uid);
+    const write = () => F.setDoc(ref, { data: JSON.stringify(state), updatedAt: state.updatedAt })
+      .then(() => status.textContent = '✓ Đồng bộ · ' + user.email)
+      .catch(e => status.textContent = '⚠ Lỗi đồng bộ: ' + e.code);
+    pushRemote = () => { status.textContent = 'Đang lưu…'; clearTimeout(timer); timer = setTimeout(write, 800); };
+    unsub = F.onSnapshot(ref, snap => {
+      if (snap.metadata.hasPendingWrites) return;
+      const remote = snap.data();
+      if (!remote) { write(); return; }
+      if (remote.updatedAt > state.updatedAt) {
+        state = normalize(JSON.parse(remote.data));
+        localStorage.setItem(KEY, JSON.stringify(state)); renderAll();
+      } else if (remote.updatedAt < state.updatedAt) write();
+      status.textContent = '✓ Đồng bộ · ' + user.email;
+    }, e => status.textContent = '⚠ ' + e.code);
+  });
+}
+
+applyTheme(); renderAll();
+initFirebase().catch(e => { $('#syncStatus').textContent = '⚠ Không tải được Firebase'; console.error(e); });
+</script>
+</body>
+</html>
