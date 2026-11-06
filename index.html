@@ -265,7 +265,7 @@
         <label class="f">API key – lấy tại aistudio.google.com, chỉ lưu trên máy này</label>
         <input id="apiKey" type="password" placeholder="AIza...">
         <label class="f">Model</label>
-        <input id="model" placeholder="gemini-3.8-flash">
+        <div style="display:flex;gap:8px"><input id="model" placeholder="gemini-3.8-flash" list="modelList" style="flex:1"><button class="btn" id="listModels" type="button">Xem model có sẵn</button></div><datalist id="modelList"></datalist><p class="muted" id="modelHint"></p>
         <div class="row"><button class="btn primary" id="saveAi">Lưu</button></div>
       </div>
       <div class="box">
@@ -484,7 +484,7 @@ function context() {
 
 async function askGemini(text) {
   if (!cfg.apiKey) throw new Error('Chưa có Gemini API key. Vào Cài đặt để nhập.');
-  const history = state.chat.slice(-16).map(m => ({ role: m.role, parts: [{ text: m.text }] }));
+  const history = state.chat.slice(-8).map(m => ({ role: m.role, parts: [{ text: m.text }] }));
   const body = {
     systemInstruction: { parts: [{ text: SYSTEM + '\n\n' + context() }] },
     contents: [...history, { role: 'user', parts: [{ text }] }],
@@ -503,7 +503,7 @@ async function askGemini(text) {
     } finally { clearTimeout(timer); }
   };
   // Ask for light thinking (much faster); fall back if this model doesn't accept the option.
-  let [res, data] = await call({ ...body, generationConfig: { ...body.generationConfig, thinkingConfig: { thinkingLevel: 'low' } } });
+  let [res, data] = await call({ ...body, generationConfig: { ...body.generationConfig, thinkingConfig: { thinkingLevel: 'minimal' } } });
   if (res.status === 400 && /thinking/i.test(data.error?.message || '')) [res, data] = await call(body);
   if (!res.ok) throw new Error(data.error?.message || 'Lỗi gọi Gemini (' + res.status + ')');
   const raw = data.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || '{}';
@@ -530,7 +530,7 @@ function renderChat(pending) {
     }
     return bubble(m.role, esc(m.text) + prop);
   }).join('')
-    + (pending ? bubble('user', esc(pending)) + bubble('model', '<span class="muted">Đang suy nghĩ…</span>') : '')
+    + (pending ? bubble('user', esc(pending)) + bubble('model', '<span class="muted" id="thinking">Đang suy nghĩ…</span>') : '')
     + (chatError ? bubble('model', `<span class="overdue">⚠ ${esc(chatError)}</span> <button class="btn sm" data-retry>Thử lại</button>`) : '')
     + (!pending && !chatError && state.chat.at(-1)?.role === 'user' ? bubble('model', '<span class="muted">Tin nhắn này chưa có phản hồi.</span> <button class="btn sm" data-retry>Gửi lại</button>') : '');
   box.scrollTop = box.scrollHeight;
@@ -560,6 +560,7 @@ async function send(text) {
   chatBusy = true; chatError = '';
   $('#sendBtn').disabled = true; $('#sendBtn').textContent = '…';
   renderChat(text);
+  const t0 = Date.now(), tick = setInterval(() => { const el = document.getElementById('thinking'); if (el) el.textContent = 'Đang suy nghĩ… ' + Math.round((Date.now() - t0) / 1000) + 's'; }, 1000);
   try {
     const r = await askGemini(text);
     state.chat.push({ role: 'user', text, at: nowISO() },
@@ -569,7 +570,7 @@ async function send(text) {
     chatError = err.message || String(err);
     $('#chatForm').elements.q.value = text;
   }
-  chatBusy = false;
+  clearInterval(tick); chatBusy = false;
   $('#sendBtn').disabled = false; $('#sendBtn').textContent = 'Gửi';
   renderChat();
 }
@@ -626,6 +627,19 @@ const applyTheme = () => document.body.classList.toggle('dark', !!cfg.dark);
 $('#themeBtn').addEventListener('click', () => { cfg.dark = !cfg.dark; saveCfg(); applyTheme(); });
 
 $('#apiKey').value = cfg.apiKey || ''; $('#model').value = cfg.model || '';
+$('#listModels').addEventListener('click', async () => {
+  const key = $('#apiKey').value.trim() || cfg.apiKey, hint = $('#modelHint');
+  if (!key) { hint.textContent = 'Nhập API key trước.'; return; }
+  hint.textContent = 'Đang tải…';
+  try {
+    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=200', { headers: { 'x-goog-api-key': key } });
+    const d = await r.json(); if (!r.ok) throw new Error(d.error?.message || r.status);
+    const names = (d.models || []).filter(m => m.supportedGenerationMethods?.includes('generateContent')).map(m => m.name.replace('models/', ''))
+      .filter(n => /gemini/.test(n) && !/embedding|image|tts|audio|live/.test(n)).sort((a, b) => (/lite/.test(b) - /lite/.test(a)) || b.localeCompare(a));
+    $('#modelList').innerHTML = names.map(n => `<option value="${esc(n)}">`).join('');
+    hint.textContent = names.length ? 'Bấm vào ô Model để chọn. Nên thử loại "flash-lite" (nhanh nhất): ' + names.filter(n => /lite/.test(n)).slice(0, 3).join(', ') : 'Không tìm thấy model nào.';
+  } catch (e) { hint.textContent = '⚠ ' + e.message; }
+});
 $('#saveAi').addEventListener('click', () => { cfg.apiKey = $('#apiKey').value.trim(); cfg.model = $('#model').value.trim(); saveCfg(); alert('Đã lưu.'); renderChat(); });
 
 function renderBackup() {
