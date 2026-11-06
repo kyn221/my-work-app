@@ -117,7 +117,7 @@
   .msg.user { align-self:flex-end; }
   .msg.user .bub { background:var(--accent); color:#fff; border-color:var(--accent); border-bottom-right-radius:4px; }
   .msg.model .bub { border-top-left-radius:4px; }
-  .prop { margin-top:10px; background:var(--col); border-radius:10px; padding:10px 12px; }
+  .prop { white-space:normal; margin-top:10px; background:var(--col); border-radius:10px; padding:10px 12px; }
   .prop .it { font-size:13px; margin:4px 0; }
   .prop .row { justify-content:flex-start; margin-top:8px; }
   .hints { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
@@ -473,7 +473,7 @@ dlg.addEventListener('close', () => {
 /* ========== AI chat (Gemini) ========== */
 const SYSTEM = `Bạn là trợ lý quản lý công việc cá nhân, trả lời tiếng Việt, ngắn gọn, thân thiện.
 Nhiệm vụ: (1) tách lời người dùng thành task khi họ nhắc việc cần làm; (2) đề xuất cập nhật task hiện có (đổi trạng thái, ưu tiên, hạn, đánh dấu top3) khi họ báo đã làm/đổi kế hoạch; (3) trả lời câu hỏi về tiến độ dựa trên danh sách task.
-Quy tắc: chỉ dùng id có trong danh sách khi cập nhật; ngày dạng YYYY-MM-DD, tự quy đổi "mai", "thứ 6"... theo ngày hôm nay; priority là high|med|low; status là todo|doing|done. Không bịa task. Nếu không có gì để tạo/cập nhật thì để mảng rỗng.
+Quy tắc: chỉ dùng id có trong danh sách khi cập nhật; ngày dạng YYYY-MM-DD, tự quy đổi "mai", "thứ 6"... theo ngày hôm nay; priority là high|med|low; status là todo|doing|done. Task chỉ được tạo khi người dùng bấm Áp dụng, nên trong reply hãy nói "mình đề xuất..." chứ không nói "đã thêm". Nếu có giờ cụ thể (vd 5h sáng) thì ghi vào note. Không bịa task. Nếu không có gì để tạo/cập nhật thì để mảng rỗng.
 Luôn trả về JSON đúng dạng: {"reply": string, "create": [{"title","priority","due","project","note"}], "update": [{"id","status"?,"priority"?,"due"?,"top3"?}]}`;
 
 function context() {
