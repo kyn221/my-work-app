@@ -310,6 +310,7 @@
       <div style="flex:1"><label class="f">Ưu tiên</label>
         <select name="priority"><option value="high">Cao</option><option value="med">Vừa</option><option value="low">Thấp</option></select></div>
       <div style="flex:1"><label class="f">Hạn chót</label><input name="due" type="date"></div>
+      <div style="flex:1"><label class="f">Giờ</label><input name="time" type="time"></div>
     </div>
     <label class="check"><input type="checkbox" name="top3"> ★ Thuộc "3 việc quan trọng hôm nay"</label>
     <label class="f">Checklist – mỗi dòng một việc con, thêm "[x] " nếu đã xong</label><textarea name="subs" rows="4"></textarea>
@@ -356,7 +357,7 @@ function renderAll() { renderBoard(); renderChat(); if (!$('[data-page=report]')
 /* ========== Tasks ========== */
 function newTask(o) {
   const t = { id: crypto.randomUUID(), title: String(o.title).trim(), priority: PRI[o.priority] ? o.priority : 'med',
-    due: o.due || '', project: (o.project || '').trim(), note: o.note || '', subs: [], top3: false,
+    due: o.due || '', time: /^\d{1,2}:\d{2}$/.test(o.time || '') ? o.time.padStart(5, '0') : '', project: (o.project || '').trim(), note: o.note || '', subs: [], top3: false,
     status: 'todo', created: nowISO(), doneAt: null, history: [{ at: nowISO(), to: 'todo' }] };
   state.tasks.push(t); return t;
 }
@@ -390,7 +391,7 @@ function renderBoard() {
       .filter(t => t.status === key && (!pf.value || t.project === pf.value)
         && (!q || `${t.title} ${t.note} ${t.project}`.toLowerCase().includes(q)))
       .filter(t => key !== 'done' || t.doneAt >= daysAgo(14))
-      .sort((a, b) => (!!b.top3 - !!a.top3) || PRI[a.priority][2] - PRI[b.priority][2] || (a.due || '9').localeCompare(b.due || '9'));
+      .sort((a, b) => (!!b.top3 - !!a.top3) || PRI[a.priority][2] - PRI[b.priority][2] || (a.due || '9').localeCompare(b.due || '9') || (a.time || '9').localeCompare(b.time || '9'));
     const col = document.createElement('div');
     col.className = 'col'; col.dataset.status = key;
     col.innerHTML = `<div class="col-head"><span class="dot" style="background:${color}"></span>${label}<span class="count">${items.length}</span></div>`
@@ -412,7 +413,7 @@ function renderBoard() {
           <div class="meta">
             <span class="tag ${PRI[t.priority][1]}">${PRI[t.priority][0]}</span>
             ${t.project ? `<span class="tag proj"># ${esc(t.project)}</span>` : ''}
-            ${t.due ? `<span class="due ${late ? 'overdue' : ''}" ${dueToday ? 'style="color:var(--amber);font-weight:600"' : ''}>📅 ${late ? 'Trễ · ' : dueToday ? 'Hôm nay · ' : ''}${fmt(t.due)}</span>` : ''}
+            ${t.due ? `<span class="due ${late ? 'overdue' : ''}" ${dueToday ? 'style="color:var(--amber);font-weight:600"' : ''}>📅 ${late ? 'Trễ · ' : dueToday ? 'Hôm nay · ' : ''}${fmt(t.due)}${t.time ? ' · ' + t.time : ''}</span>` : t.time ? `<span class="due">🕒 ${t.time}</span>` : ''}
             ${t.subs.length ? `<span style="margin-left:auto">☑ ${sd}/${t.subs.length}</span>` : ''}
           </div>
           <div class="mv">${COLS.filter(c => c[0] !== key).map(c => `<button class="btn sm" data-move="${c[0]}">→ ${c[1]}</button>`).join('')}</div>
@@ -465,7 +466,7 @@ board.addEventListener('click', e => {
   if (act === 'del' && confirm(`Xoá "${t.title}"?`)) { state.tasks = state.tasks.filter(x => x !== t); save(); renderBoard(); }
   if (act === 'edit') {
     editing = t;
-    ef.title.value = t.title; ef.project.value = t.project; ef.priority.value = t.priority; ef.due.value = t.due;
+    ef.title.value = t.title; ef.project.value = t.project; ef.priority.value = t.priority; ef.due.value = t.due; ef.time.value = t.time || '';
     ef.top3.checked = !!t.top3; ef.note.value = t.note;
     ef.subs.value = t.subs.map(s => (s.done ? '[x] ' : '') + s.text).join('\n');
     $('#histText').textContent = 'Lịch sử: ' + t.history.map(h => `${fmt(h.at)} ${h.from ? ST[h.from] + ' → ' : 'Tạo · '}${ST[h.to]}`).join('  |  ');
@@ -475,7 +476,7 @@ board.addEventListener('click', e => {
 dlg.addEventListener('close', () => {
   if (dlg.returnValue === 'save' && editing) {
     Object.assign(editing, { title: ef.title.value.trim() || editing.title, project: ef.project.value.trim(), priority: ef.priority.value,
-      due: ef.due.value, top3: ef.top3.checked, note: ef.note.value,
+      due: ef.due.value, time: ef.time.value, top3: ef.top3.checked, note: ef.note.value,
       subs: ef.subs.value.split('\n').map(l => l.trim()).filter(Boolean).map(l => ({ done: /^\[x\]\s*/i.test(l), text: l.replace(/^\[x\]\s*/i, '') })) });
     save(); renderBoard();
   }
@@ -485,12 +486,12 @@ dlg.addEventListener('close', () => {
 /* ========== AI chat (Gemini) ========== */
 const SYSTEM = `Bạn là trợ lý quản lý công việc cá nhân, trả lời tiếng Việt, ngắn gọn, thân thiện.
 Nhiệm vụ: (1) tách lời người dùng thành task khi họ nhắc việc cần làm; (2) đề xuất cập nhật task hiện có (đổi trạng thái, ưu tiên, hạn, đánh dấu top3) khi họ báo đã làm/đổi kế hoạch; (3) trả lời câu hỏi về tiến độ dựa trên danh sách task.
-Quy tắc: chỉ dùng id có trong danh sách khi cập nhật; ngày dạng YYYY-MM-DD, tự quy đổi "mai", "thứ 6"... theo ngày hôm nay; priority là high|med|low; status là todo|doing|done. Task chỉ được tạo khi người dùng bấm Áp dụng, nên trong reply hãy nói "mình đề xuất..." chứ không nói "đã thêm". Nếu có giờ cụ thể (vd 5h sáng) thì ghi vào note. Một việc chỉ được coi là đã có khi nằm trong "Danh sách task" bên dưới; không suy ra từ lịch sử chat. Không bịa task. Nếu không có gì để tạo/cập nhật thì để mảng rỗng.
-Luôn trả về JSON đúng dạng: {"reply": string, "create": [{"title","priority","due","project","note"}], "update": [{"id","status"?,"priority"?,"due"?,"top3"?}]}`;
+Quy tắc: chỉ dùng id có trong danh sách khi cập nhật; ngày dạng YYYY-MM-DD, tự quy đổi "mai", "thứ 6"... theo ngày hôm nay; priority là high|med|low; status là todo|doing|done. Task chỉ được tạo khi người dùng bấm Áp dụng, nên trong reply hãy nói "mình đề xuất..." chứ không nói "đã thêm". Tiêu đề task: viết lại ngắn gọn, rõ nghĩa, đúng chính tả tiếng Việt, viết hoa chữ đầu, bắt đầu bằng động từ, mở rộng từ viết tắt quen thuộc (vd "coi t1 đánh cktg" -> "Xem T1 thi đấu CKTG"); không đưa ngày/giờ vào tiêu đề. Giờ cụ thể (vd "5h sáng", "9h", "14h30") ghi vào trường "time" dạng HH:MM 24 giờ; không có giờ thì để "". note chỉ dùng cho chi tiết thêm. Một việc chỉ được coi là đã có khi nằm trong "Danh sách task" bên dưới; không suy ra từ lịch sử chat. Không bịa task. Nếu không có gì để tạo/cập nhật thì để mảng rỗng.
+Luôn trả về JSON đúng dạng: {"reply": string, "create": [{"title","priority","due","time","project","note"}], "update": [{"id","status"?,"priority"?,"due"?,"time"?,"top3"?}]}`;
 
 function context() {
   const list = state.tasks.filter(t => t.status !== 'done' || t.doneAt >= daysAgo(7))
-    .map(t => `${t.id}|${t.title}|${t.status}|${t.priority}|hạn:${t.due || '-'}|dự án:${t.project || '-'}|top3:${!!t.top3}${t.doneAt ? '|xong:' + t.doneAt : ''}`).join('\n');
+    .map(t => `${t.id}|${t.title}|${t.status}|${t.priority}|hạn:${t.due || '-'}${t.time ? ' ' + t.time : ''}|dự án:${t.project || '-'}|top3:${!!t.top3}${t.doneAt ? '|xong:' + t.doneAt : ''}`).join('\n');
   return `Hôm nay: ${today()} (${new Date().toLocaleDateString('vi-VN', { weekday: 'long' })}).\nDanh sách task (id|tiêu đề|trạng thái|ưu tiên|hạn|dự án|top3):\n${list || '(trống)'}`;
 }
 
@@ -549,9 +550,9 @@ function renderChat(pending) {
     const c = m.create || [], u = (m.update || []).filter(x => state.tasks.some(t => t.id === x.id));
     if (m.role === 'model' && (c.length || u.length)) {
       prop = `<div class="prop">
-        ${c.map(x => `<div class="it">＋ <b>${esc(x.title)}</b> · ${PRI[x.priority]?.[0] || 'Vừa'}${x.due ? ' · hạn ' + fmt(x.due) : ''}${x.project ? ' · #' + esc(x.project) : ''}</div>`).join('')}
+        ${c.map(x => `<div class="it">＋ <b>${esc(x.title)}</b> · ${PRI[x.priority]?.[0] || 'Vừa'}${x.due ? ' · hạn ' + fmt(x.due) : ''}${x.time ? ' ' + esc(x.time) : ''}${x.project ? ' · #' + esc(x.project) : ''}</div>`).join('')}
         ${u.map(x => { const t = state.tasks.find(t => t.id === x.id);
-          return `<div class="it">✎ <b>${esc(t.title)}</b>: ${[x.status && '→ ' + ST[x.status], x.priority && 'ưu tiên ' + PRI[x.priority]?.[0], x.due && 'hạn ' + fmt(x.due), x.top3 !== undefined && (x.top3 ? '★ top 3' : 'bỏ top 3')].filter(Boolean).join(', ')}</div>`; }).join('')}
+          return `<div class="it">✎ <b>${esc(t.title)}</b>: ${[x.status && '→ ' + ST[x.status], x.priority && 'ưu tiên ' + PRI[x.priority]?.[0], x.due && 'hạn ' + fmt(x.due), x.time && 'giờ ' + esc(x.time), x.top3 !== undefined && (x.top3 ? '★ top 3' : 'bỏ top 3')].filter(Boolean).join(', ')}</div>`; }).join('')}
         <div class="row">${m.applied ? '<span class="muted">✓ Đã áp dụng</span>' : `<button class="btn sm primary" data-apply="${i}">Áp dụng</button><button class="btn sm" data-skip="${i}">Bỏ qua</button>`}</div>
       </div>`;
     }
@@ -574,6 +575,7 @@ $('#msgs').addEventListener('click', e => {
     if (x.status) setStatus(t, x.status);
     if (PRI[x.priority]) t.priority = x.priority;
     if (x.due) t.due = x.due;
+    if (x.time !== undefined) t.time = x.time;
     if (x.top3 !== undefined) t.top3 = !!x.top3;
   });
   m.applied = true; save(); renderAll();
