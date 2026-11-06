@@ -3,145 +3,193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#4f46e5">
+<meta name="theme-color" content="#0d6e66">
 <title>My Work</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#f7f7f8; --side:#fbfbfc; --card:#ffffff; --col:#f1f2f4; --line:#e7e8ec; --line2:#d9dbe1;
-    --text:#18181b; --muted:#71717a; --faint:#a1a1aa;
-    --accent:#4f46e5; --accent2:#6366f1; --soft:#eef0ff;
-    --red:#e5484d; --redbg:#fdecec; --amber:#b45309; --amberbg:#fef3c7; --green:#15803d; --greenbg:#e3f6ea;
-    --shadow:0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
-    --shadow2:0 8px 24px rgba(16,24,40,.12);
-    --r:12px;
+    --bg:#eef1f4; --side:#e6eaee; --card:#ffffff; --col:#e4e8ec; --line:#d9dfe5; --line2:#c6cdd5;
+    --text:#16202e; --muted:#5b6878; --faint:#8a95a3;
+    --accent:#0d6e66; --accent2:#0f857b; --soft:#d9efec; --on-accent:#ffffff;
+    --work:#3a5ba0; --personal:#a1466f;
+    --red:#c2410c; --redbg:#fbe7dc; --amber:#a15c07; --amberbg:#fbefd6; --green:#3f7a1c; --greenbg:#e6f1db;
+    --shadow:0 1px 0 rgba(22,32,46,.04);
+    --shadow2:0 10px 30px -12px rgba(22,32,46,.28);
+    --r:14px; --r-sm:8px;
   }
   body.dark {
-    --bg:#0e0f13; --side:#121318; --card:#181a20; --col:#14161b; --line:#262932; --line2:#323643;
-    --text:#ececf1; --muted:#9a9cab; --faint:#6b6e7c;
-    --accent:#7c83ff; --accent2:#8b91ff; --soft:#20234a;
-    --redbg:#3a1d20; --amber:#f5b453; --amberbg:#3a2c14; --green:#4ade80; --greenbg:#15301f;
-    --shadow:0 1px 2px rgba(0,0,0,.4); --shadow2:0 8px 24px rgba(0,0,0,.5);
+    --bg:#11161c; --side:#0d1217; --card:#19212a; --col:#151c23; --line:#26303b; --line2:#34404d;
+    --text:#e5eaef; --muted:#97a3b1; --faint:#68737f;
+    --accent:#3fb3a6; --accent2:#5cc7ba; --soft:#183a37; --on-accent:#0b1a19;
+    --work:#7d9be0; --personal:#d987ad;
+    --red:#f08a5d; --redbg:#3a2219; --amber:#e8b04f; --amberbg:#352a15; --green:#9ccc6e; --greenbg:#22301a;
+    --shadow:none; --shadow2:0 12px 32px -10px rgba(0,0,0,.6);
   }
   [hidden] { display:none !important; }
   * { box-sizing:border-box; }
   html, body { height:100%; }
-  body { margin:0; font-family:Inter, system-ui, "Segoe UI", sans-serif; font-size:14px; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
+  body { margin:0; font-family:"Be Vietnam Pro", system-ui, "Segoe UI", sans-serif; font-size:14px; line-height:1.5; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; font-feature-settings:"tnum" 1; }
   input, select, textarea, button { font:inherit; color:inherit; }
-  input, select, textarea { padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--card); outline:none; transition:border-color .15s, box-shadow .15s; }
-  input:focus, select:focus, textarea:focus { border-color:var(--accent2); box-shadow:0 0 0 3px var(--soft); }
-  .btn { padding:8px 14px; border:1px solid var(--line); border-radius:8px; background:var(--card); cursor:pointer; font-weight:500; transition:background .15s, border-color .15s; }
+  input, select, textarea { padding:8px 11px; border:1px solid var(--line); border-radius:var(--r-sm); background:var(--card); outline:none; transition:border-color .15s, box-shadow .15s; }
+  input::placeholder, textarea::placeholder { color:var(--faint); }
+  input:focus, select:focus, textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--soft); }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline:none; }
+  .ico { width:16px; height:16px; flex:none; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vertical-align:-3px; }
+  .btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid var(--line); border-radius:var(--r-sm); background:var(--card); cursor:pointer; font-weight:500; transition:background .15s, border-color .15s; }
   .btn:hover { border-color:var(--line2); background:var(--col); }
-  .btn.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
-  .btn.primary:hover { background:var(--accent2); }
-  .btn.sm { padding:4px 10px; font-size:12px; }
+  .btn.primary { background:var(--accent); color:var(--on-accent); border-color:var(--accent); }
+  .btn.primary:hover { background:var(--accent2); border-color:var(--accent2); }
+  .btn.sm { padding:4px 10px; font-size:12.5px; }
   .btn.ghost { border-color:transparent; background:none; }
+  .btn:disabled { opacity:.6; cursor:default; }
   .muted { color:var(--muted); font-size:13px; }
 
-  /* ---------- Layout ---------- */
-  .app { display:grid; grid-template-columns:232px 1fr; height:100%; }
-  aside { background:var(--side); border-right:1px solid var(--line); display:flex; flex-direction:column; padding:18px 12px; gap:4px; overflow-y:auto; }
-  .logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:16px; padding:0 8px 16px; }
-  .logo i { width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg,var(--accent),#a855f7); display:grid; place-items:center; color:#fff; font-style:normal; font-size:14px; }
-  #nav { display:flex; flex-direction:column; gap:2px; }
-  #nav button { display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none; padding:8px 10px; border-radius:8px; cursor:pointer; color:var(--muted); font-weight:500; }
-  #nav button:hover { background:var(--col); color:var(--text); }
-  #nav button.active { background:var(--soft); color:var(--accent); }
-  #nav .ic { width:18px; text-align:center; }
-  .side-title { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--faint); padding:18px 10px 6px; }
-  #sideProj button { display:flex; justify-content:space-between; width:100%; border:none; background:none; padding:6px 10px; border-radius:8px; cursor:pointer; color:var(--muted); text-align:left; }
-  #sideProj button:hover, #sideProj button.active { background:var(--col); color:var(--text); }
-  #sideProj .n { font-size:12px; color:var(--faint); }
-  .side-foot { margin-top:auto; padding:12px 8px 0; border-top:1px solid var(--line); display:flex; align-items:center; gap:8px; }
-  .side-foot .muted { flex:1; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .content { overflow-y:auto; }
-  main { padding:28px 32px 40px; max-width:1280px; margin:0 auto; }
-  .page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
-  .page-head h1 { font-size:22px; margin:0; font-weight:700; letter-spacing:-.01em; }
-  .page-head .sub { color:var(--muted); margin-top:4px; }
+  .toasts { position:fixed; right:20px; bottom:20px; z-index:50; display:flex; flex-direction:column; gap:10px; max-width:340px; }
+  .toast { background:var(--card); border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:12px; padding:12px 14px; box-shadow:var(--shadow2); animation:pop .18s ease-out; }
+  .toast b { display:block; margin-bottom:2px; }
+  .toast .row { justify-content:flex-start; margin-top:10px; }
+  @keyframes pop { from { opacity:0; transform:translateY(6px); } }
 
-  .banner { background:var(--amberbg); color:var(--amber); border-radius:10px; padding:10px 14px; margin-bottom:18px; display:flex; gap:10px; align-items:center; font-size:13px; }
-  .box { background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:16px 18px; margin-bottom:16px; box-shadow:var(--shadow); }
-  .box > b:first-child { display:block; margin-bottom:10px; }
+  /* ---------- Layout ---------- */
+  .app { display:grid; grid-template-columns:236px 1fr; height:100%; }
+  aside { background:var(--side); display:flex; flex-direction:column; padding:20px 14px 14px; gap:2px; overflow-y:auto; }
+  .logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:16px; letter-spacing:-.01em; padding:0 8px 18px; }
+  .logo i { width:26px; height:26px; border-radius:7px; background:var(--accent); display:grid; place-items:center; color:var(--on-accent); font-style:normal; font-size:13px; }
+  #nav { display:flex; flex-direction:column; gap:2px; }
+  #nav button { display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:none; background:none; padding:8px 10px; border-radius:var(--r-sm); cursor:pointer; color:var(--muted); font-weight:500; }
+  #nav button:hover { background:var(--col); color:var(--text); }
+  #nav button.active { background:var(--card); color:var(--text); box-shadow:0 1px 2px rgba(22,32,46,.08); }
+  #nav button.active .ico { color:var(--accent); }
+  .side-title { font-size:12px; font-weight:600; color:var(--faint); padding:20px 10px 6px; }
+  #sideProj button, #sideArea button { display:flex; align-items:center; gap:8px; width:100%; border:none; background:none; padding:6px 10px; border-radius:var(--r-sm); cursor:pointer; color:var(--muted); text-align:left; }
+  #sideProj button span:first-child, #sideArea button span:first-child { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  #sideProj button:hover, #sideArea button:hover { background:var(--col); color:var(--text); }
+  #sideProj button.active, #sideArea button.active { background:var(--col); color:var(--text); font-weight:500; }
+  #sideProj .n, #sideArea .n { font-size:12px; color:var(--faint); }
+  .swatch { width:8px; height:8px; border-radius:3px; flex:none; }
+  .side-foot { margin-top:auto; padding:12px 8px 0; display:flex; align-items:center; gap:8px; }
+  .side-foot .muted { flex:1; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .content { overflow-y:auto; min-width:0; }
+  main { padding:32px 36px 48px; max-width:1320px; margin:0 auto; }
+  .page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:20px 32px; flex-wrap:wrap; margin-bottom:22px; }
+  .page-head h1 { font-size:26px; line-height:1.15; margin:0; font-weight:700; letter-spacing:-.02em; }
+  .page-head .sub { color:var(--muted); margin-top:4px; font-size:14px; }
+
+  .banner { background:var(--amberbg); color:var(--amber); border-radius:10px; padding:10px 14px; margin-bottom:20px; display:flex; gap:10px; align-items:center; font-size:13px; }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:18px 20px; margin-bottom:16px; }
+  .box > b:first-child { display:block; margin-bottom:12px; font-size:15px; }
+
+  /* ---------- Today: time budget (the one bold element) ---------- */
+  .chips { display:flex; flex-direction:column; align-items:flex-end; gap:10px; min-width:min(100%, 420px); }
+  .budget { width:100%; }
+  .budget-top { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:6px; }
+  .budget-top b { font-size:22px; font-weight:700; letter-spacing:-.02em; }
+  .budget-top b small { font-size:14px; font-weight:500; color:var(--muted); letter-spacing:0; }
+  .budget-top span { font-size:13px; color:var(--muted); }
+  .meter { height:10px; border-radius:6px; background:var(--col); overflow:hidden; display:flex; }
+  .meter i { display:block; height:100%; }
+  .meter .w { background:var(--work); } .meter .p { background:var(--personal); }
+  .budget.warn .budget-top span { color:var(--amber); font-weight:600; }
+  .budget.bad .budget-top span { color:var(--red); font-weight:600; }
+  .budget.bad .meter { box-shadow:inset 0 0 0 1.5px var(--red); }
+  .stats-line { display:flex; gap:18px; flex-wrap:wrap; justify-content:flex-end; font-size:13px; color:var(--muted); }
+  .stats-line b { color:var(--text); font-weight:600; }
+  .stats-line .bad b { color:var(--red); }
 
   /* ---------- Board ---------- */
-  .chips { display:flex; gap:8px; flex-wrap:wrap; }
-  .chip { display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background:var(--card); border:1px solid var(--line); font-size:13px; color:var(--muted); }
-  .chip b { color:var(--text); font-size:14px; }
-  .chip.bad b { color:var(--red); }
-  .quick { display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:6px 6px 6px 14px; box-shadow:var(--shadow); margin-bottom:14px; transition:border-color .15s, box-shadow .15s; }
-  .quick:focus-within { border-color:var(--accent2); box-shadow:0 0 0 3px var(--soft); }
-  .quick input, .quick select { border:none; box-shadow:none !important; padding:8px 6px; background:transparent; }
-  .quick input[name=title] { flex:1; min-width:120px; font-size:15px; }
-  .quick .pill { background:var(--col); border-radius:8px; }
-  .toolbar { display:flex; gap:8px; align-items:center; margin-bottom:18px; flex-wrap:wrap; }
+  .quick { display:flex; flex-wrap:wrap; align-items:center; gap:6px; background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:6px 6px 6px 14px; margin-bottom:14px; transition:border-color .15s, box-shadow .15s; }
+  .quick:focus-within { border-color:var(--accent); box-shadow:0 0 0 3px var(--soft); }
+  .quick input, .quick select { border:none; box-shadow:none !important; padding:8px 8px; background:transparent; }
+  .quick input[name=title] { flex:1 1 220px; min-width:0; font-size:15px; }
+  .quick select[name=area] { width:104px; } .quick select[name=priority] { width:116px; } .quick input[name=due] { width:132px; } .quick input[name=project] { width:104px !important; } .quick input[name=est] { width:96px !important; }
+  .quick .pill { background:var(--bg); border-radius:var(--r-sm); font-size:13px; color:var(--muted); }
+  .quick .plus { color:var(--accent); display:grid; }
+  .toolbar { display:flex; gap:8px; align-items:center; margin-bottom:20px; flex-wrap:wrap; }
   .toolbar input { width:240px; }
-  .board { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; align-items:start; }
-  .col { background:var(--col); border-radius:var(--r); padding:12px; min-height:320px; transition:outline .1s; }
-  .col.over { outline:2px dashed var(--accent2); outline-offset:-2px; }
-  .col-head { display:flex; align-items:center; gap:8px; margin:2px 4px 12px; font-weight:600; }
+  .toolbar input, .toolbar select { background:transparent; }
+  .board { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px; align-items:start; }
+  .col { background:var(--col); border-radius:var(--r); padding:10px; min-height:320px; }
+  .col.over { outline:2px dashed var(--accent); outline-offset:-2px; }
+  .col-head { display:flex; align-items:center; gap:8px; margin:4px 6px 12px; font-weight:600; font-size:13.5px; }
   .dot { width:8px; height:8px; border-radius:50%; }
-  .count { margin-left:auto; font-size:12px; color:var(--muted); background:var(--card); border-radius:999px; padding:1px 8px; border:1px solid var(--line); }
-  .empty { border:1.5px dashed var(--line2); border-radius:10px; padding:22px 10px; text-align:center; color:var(--faint); font-size:13px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:10px; cursor:grab; box-shadow:var(--shadow); transition:box-shadow .15s, transform .15s; }
-  .card:hover { box-shadow:var(--shadow2); transform:translateY(-1px); }
-  .card:hover .acts { opacity:1; }
-  .card.top3 { box-shadow:inset 3px 0 0 #f59e0b, var(--shadow); }
-  .card.done .t { color:var(--muted); text-decoration:line-through; }
+  .count { margin-left:auto; font-size:12px; color:var(--muted); font-weight:500; }
+  .empty { border:1.5px dashed var(--line2); border-radius:10px; padding:26px 12px; text-align:center; color:var(--faint); font-size:13px; }
+  .card { position:relative; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 12px 11px 15px; margin-bottom:8px; cursor:grab; transition:border-color .15s, box-shadow .15s; overflow:hidden; }
+  .card::before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--work); }
+  .card.area-personal::before { background:var(--personal); }
+  .card:hover { border-color:var(--line2); box-shadow:var(--shadow2); }
+  .card:hover .acts, .card:focus-within .acts { opacity:1; }
+  .card.done { background:transparent; }
+  .card.done .t { color:var(--muted); text-decoration:line-through; text-decoration-color:var(--line2); }
   .card .top { display:flex; gap:8px; align-items:flex-start; }
-  .card .t { font-weight:500; line-height:1.4; word-break:break-word; flex:1; }
-  .acts { display:flex; gap:2px; opacity:0; transition:opacity .15s; }
-  .acts button { border:none; background:none; cursor:pointer; color:var(--muted); width:24px; height:24px; border-radius:6px; }
+  .card .t { font-weight:500; line-height:1.4; word-break:break-word; flex:1; font-size:14.5px; }
+  .star { color:#d99a12; margin-right:2px; }
+  .acts { position:absolute; top:6px; right:6px; display:flex; gap:0; opacity:0; transition:opacity .15s; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:1px; box-shadow:var(--shadow2); }
+  .acts button { border:none; background:none; cursor:pointer; color:var(--faint); width:26px; height:26px; border-radius:6px; display:grid; place-items:center; }
   .acts button:hover { background:var(--col); color:var(--text); }
-  .meta { display:flex; gap:6px; font-size:12px; color:var(--muted); flex-wrap:wrap; align-items:center; margin-top:10px; }
-  .tag { padding:2px 8px; border-radius:6px; font-size:11px; font-weight:600; }
+  .acts button[data-act=del]:hover { color:var(--red); }
+  .acts .ico { width:15px; height:15px; }
+  .meta { display:flex; gap:4px 12px; font-size:12px; color:var(--muted); flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .meta > span { display:inline-flex; align-items:center; gap:4px; }
+  .meta .ico { width:13px; height:13px; vertical-align:0; }
+  .tag { padding:1px 7px; border-radius:5px; font-size:11.5px; font-weight:600; }
   .p-high { background:var(--redbg); color:var(--red); } .p-med { background:var(--amberbg); color:var(--amber); } .p-low { background:var(--greenbg); color:var(--green); }
-  .proj { background:var(--soft); color:var(--accent); }
+  .proj { color:var(--muted); font-weight:500; padding:0; }
   .due { display:inline-flex; gap:4px; align-items:center; }
+  .due.today { color:var(--amber); font-weight:600; }
   .overdue { color:var(--red); font-weight:600; }
-  .progress { height:4px; background:var(--col); border-radius:4px; margin-top:10px; overflow:hidden; }
-  .progress span { display:block; height:100%; background:var(--accent2); }
-  .sub { font-size:13px; margin-top:8px; display:flex; flex-direction:column; gap:3px; }
-  .sub label { display:flex; gap:8px; align-items:center; cursor:pointer; }
-  .sub input { accent-color:var(--accent); padding:0; }
-  .note { font-size:12px; color:var(--muted); margin-top:8px; white-space:pre-wrap; line-height:1.45; }
-  .mv { display:none; gap:6px; margin-top:10px; }
+  .progress { height:3px; background:var(--col); border-radius:3px; margin-top:10px; overflow:hidden; }
+  .progress span { display:block; height:100%; background:var(--accent); }
+  .sub { font-size:13px; margin-top:8px; display:flex; flex-direction:column; gap:4px; }
+  .sub label { display:flex; gap:8px; align-items:flex-start; cursor:pointer; color:var(--muted); line-height:1.4; }
+  .sub input { accent-color:var(--accent); padding:0; margin:2px 0 0; flex:none; }
+  .sub .est { margin-left:auto; color:var(--faint); font-size:11.5px; white-space:nowrap; padding-left:8px; }
+  .sub .nextstep { color:var(--text); font-weight:500; }
+  .note { font-size:12.5px; color:var(--muted); margin-top:6px; white-space:pre-wrap; line-height:1.45; }
+  .mv { display:none; gap:6px; margin-top:10px; flex-wrap:wrap; }
+
+  .focusbar { position:fixed; left:50%; transform:translateX(-50%); bottom:22px; z-index:40; display:flex; align-items:center; gap:14px; max-width:92vw; background:var(--text); color:var(--bg); padding:8px 8px 8px 20px; border-radius:999px; box-shadow:var(--shadow2); }
+  .focusbar span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .focusbar b { font-size:17px; font-weight:700; }
+  .focusbar .btn { background:transparent; color:inherit; border-color:rgba(127,127,127,.45); }
 
   /* ---------- Chat ---------- */
-  .chat { display:flex; flex-direction:column; height:calc(100vh - 150px); max-width:780px; margin:0 auto; }
-  .chatwrap { display:grid; grid-template-columns:220px 1fr; gap:16px; }
-  .convs { display:flex; flex-direction:column; gap:4px; height:calc(100vh - 150px); overflow-y:auto; }
-  .convs .new { margin-bottom:6px; }
-  .conv { display:flex; align-items:center; gap:4px; padding:8px 10px; border-radius:8px; cursor:pointer; color:var(--muted); }
+  .chatwrap { display:grid; grid-template-columns:220px minmax(0,1fr); gap:20px; }
+  .chat { display:flex; flex-direction:column; height:calc(100vh - 80px); max-width:780px; width:100%; margin:0 auto; }
+  .convs { display:flex; flex-direction:column; gap:2px; height:calc(100vh - 80px); overflow-y:auto; }
+  .convs .new { margin-bottom:10px; justify-content:center; }
+  .conv { display:flex; align-items:center; gap:4px; padding:7px 10px; border-radius:var(--r-sm); cursor:pointer; color:var(--muted); }
   .conv:hover { background:var(--col); color:var(--text); }
-  .conv.active { background:var(--soft); color:var(--accent); font-weight:500; }
+  .conv.active { background:var(--card); color:var(--text); font-weight:500; box-shadow:0 1px 2px rgba(22,32,46,.08); }
   .conv span { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .conv button { border:none; background:none; cursor:pointer; color:var(--faint); opacity:0; }
   .conv:hover button { opacity:1; }
-  .msgs { flex:1; overflow-y:auto; padding:4px 2px 12px; display:flex; flex-direction:column; gap:12px; }
+  .msgs { flex:1; overflow-y:auto; padding:4px 2px 16px; display:flex; flex-direction:column; gap:14px; }
   .msg { display:flex; gap:10px; max-width:88%; }
-  .msg .av { width:30px; height:30px; flex:none; border-radius:50%; display:grid; place-items:center; font-size:13px; background:linear-gradient(135deg,var(--accent),#a855f7); color:#fff; }
-  .msg .bub { padding:10px 14px; border-radius:14px; white-space:pre-wrap; line-height:1.55; background:var(--card); border:1px solid var(--line); box-shadow:var(--shadow); }
+  .msg .av { width:28px; height:28px; flex:none; border-radius:8px; display:grid; place-items:center; background:var(--soft); color:var(--accent); }
+  .msg .bub { padding:10px 14px; border-radius:14px; white-space:pre-wrap; line-height:1.6; background:var(--card); border:1px solid var(--line); }
   .msg.user { align-self:flex-end; }
-  .msg.user .bub { background:var(--accent); color:#fff; border-color:var(--accent); border-bottom-right-radius:4px; }
+  .msg.user .bub { background:var(--text); color:var(--bg); border-color:var(--text); border-bottom-right-radius:4px; }
   .msg.model .bub { border-top-left-radius:4px; }
-  .prop { white-space:normal; margin-top:10px; background:var(--col); border-radius:10px; padding:10px 12px; }
-  .prop .it { font-size:13px; margin:4px 0; }
-  .prop .row { justify-content:flex-start; margin-top:8px; }
-  .hints { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
-  .hints .btn { border-radius:999px; }
-  .chatbar { display:flex; gap:8px; align-items:flex-end; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:8px; box-shadow:var(--shadow); }
-  .chatbar:focus-within { border-color:var(--accent2); box-shadow:0 0 0 3px var(--soft); }
-  .chatbar textarea { flex:1; resize:none; height:46px; border:none; box-shadow:none !important; background:transparent; }
+  .prop { white-space:normal; margin-top:10px; background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:10px 12px; }
+  .prop .it { font-size:13px; margin:6px 0; }
+  .prop .row { justify-content:flex-start; margin-top:10px; }
+  .hints { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+  .hints .btn { border-radius:999px; background:transparent; color:var(--muted); }
+  .hints .btn:hover { color:var(--text); }
+  .chatbar { display:flex; gap:8px; align-items:flex-end; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:8px; }
+  .chatbar:focus-within { border-color:var(--accent); box-shadow:0 0 0 3px var(--soft); }
+  .chatbar textarea { flex:1; resize:none; height:48px; border:none; box-shadow:none !important; background:transparent; }
 
   /* ---------- Report ---------- */
-  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-bottom:16px; }
-  .stat { background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:16px; box-shadow:var(--shadow); }
-  .stat b { font-size:26px; display:block; margin-top:6px; letter-spacing:-.02em; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px; margin-bottom:16px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; }
+  .stat { background:var(--card); padding:16px 18px; }
+  .stat b { font-size:28px; display:block; margin-top:4px; letter-spacing:-.02em; font-weight:700; }
   .bars { display:flex; align-items:flex-end; gap:8px; height:160px; }
   .bar { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; font-size:11px; color:var(--muted); height:100%; justify-content:flex-end; }
-  .bar span { width:100%; max-width:34px; background:var(--accent2); border-radius:6px 6px 2px 2px; min-height:3px; }
+  .bar span { width:100%; max-width:30px; background:var(--accent); border-radius:5px 5px 2px 2px; min-height:3px; opacity:.85; }
   table { width:100%; border-collapse:collapse; }
   td, th { text-align:left; padding:9px 6px; border-bottom:1px solid var(--line); }
   th { font-size:12px; color:var(--muted); font-weight:500; }
@@ -150,50 +198,75 @@
   /* ---------- Forms / dialog ---------- */
   .narrow { max-width:720px; margin:0 auto; }
   .narrow textarea { width:100%; min-height:64px; }
-  label.f { display:block; font-size:13px; color:var(--muted); margin:12px 0 6px; font-weight:500; }
+  label.f { display:block; font-size:13px; color:var(--muted); margin:14px 0 6px; font-weight:500; }
   .narrow input:not([type=file]), .narrow select { width:100%; }
   .entry h3 { margin:0 0 8px; font-size:14px; }
-  .entry p { margin:4px 0; white-space:pre-wrap; line-height:1.5; }
+  .entry p { margin:4px 0; white-space:pre-wrap; line-height:1.55; }
   .row { display:flex; gap:8px; justify-content:flex-end; margin-top:16px; flex-wrap:wrap; }
-  dialog { border:none; border-radius:16px; padding:22px; width:460px; max-width:94vw; background:var(--card); color:var(--text); box-shadow:var(--shadow2); }
-  dialog::backdrop { background:rgba(15,15,25,.4); backdrop-filter:blur(2px); }
-  dialog h2 { margin:0 0 4px; font-size:17px; }
+  dialog { border:1px solid var(--line); border-radius:18px; padding:24px; width:580px; max-width:94vw; background:var(--card); color:var(--text); box-shadow:var(--shadow2); }
+  dialog::backdrop { background:rgba(15,20,28,.35); backdrop-filter:blur(3px); }
+  dialog h2 { margin:0 0 4px; font-size:18px; letter-spacing:-.01em; }
   dialog input:not([type=checkbox]), dialog select, dialog textarea { width:100%; }
-  .check { display:flex; gap:8px; align-items:center; margin-top:12px; cursor:pointer; }
+  .check { display:flex; gap:8px; align-items:center; margin-top:14px; cursor:pointer; }
   .check input { accent-color:var(--accent); }
+
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; animation:none !important; } }
 
   /* ---------- Mobile ---------- */
   @media (max-width:860px) {
     .app { grid-template-columns:1fr; }
-    aside { position:fixed; bottom:0; left:0; right:0; z-index:10; flex-direction:row; padding:6px; border-right:none; border-top:1px solid var(--line); }
-    .logo, .side-title, #sideProj, .side-foot .muted { display:none; }
+    aside { position:fixed; bottom:0; left:0; right:0; z-index:10; flex-direction:row; padding:6px; border-top:1px solid var(--line); background:var(--card); }
+    .logo, .side-title, #sideProj, #sideArea, .side-foot .muted { display:none; }
     #nav { flex-direction:row; flex:1; justify-content:space-around; }
-    #nav button { flex-direction:column; gap:2px; font-size:11px; padding:6px 4px; width:auto; }
-    .side-foot { margin:0; padding:0; border:none; }
-    main { padding:18px 14px 90px; }
+    #nav button { flex-direction:column; gap:3px; font-size:11px; padding:6px 4px; width:auto; }
+    #nav button.active { box-shadow:none; background:none; color:var(--accent); }
+    .side-foot { margin:0; padding:0; }
+    main { padding:20px 14px 96px; }
+    .page-head h1 { font-size:22px; }
+    .chips { align-items:stretch; min-width:100%; } .stats-line { justify-content:flex-start; }
     .board { grid-template-columns:1fr; }
-    .card { cursor:default; } .acts { opacity:1; } .mv { display:flex; }
-    .quick { flex-wrap:wrap; } .toolbar input { width:100%; }
-    .chat { height:calc(100vh - 230px); } .chatwrap { grid-template-columns:1fr; } .convs { height:auto; max-height:120px; flex-direction:row; flex-wrap:wrap; } .conv button { opacity:1; }
+    .card { cursor:default; } .mv { display:flex; }
+    .acts { position:static; opacity:1; background:none; border:none; box-shadow:none; margin:-4px -4px 0 0; }
+    .toolbar input { width:100%; }
+    .chat { height:calc(100vh - 240px); } .chatwrap { grid-template-columns:1fr; } .convs { height:auto; max-height:120px; flex-direction:row; flex-wrap:wrap; } .conv button { opacity:1; }
+    .focusbar, .toasts { bottom:80px; }
   }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-board" viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 013 3v13H8a3 3 0 01-3-3z"/><path d="M5 17a3 3 0 013-3h11"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+</svg>
 <div class="app">
   <aside>
     <div class="logo"><i>✓</i>My Work</div>
     <nav id="nav">
-      <button data-view="board" class="active"><span class="ic">▦</span>Công việc</button>
-      <button data-view="chat"><span class="ic">✦</span>Trợ lý AI</button>
-      <button data-view="report"><span class="ic">▤</span>Báo cáo</button>
-      <button data-view="log"><span class="ic">✎</span>Nhật ký</button>
-      <button data-view="settings"><span class="ic">⚙</span>Cài đặt</button>
+      <button data-view="board" class="active"><svg class="ico"><use href="#i-board"/></svg>Công việc</button>
+      <button data-view="chat"><svg class="ico"><use href="#i-spark"/></svg>Trợ lý AI</button>
+      <button data-view="report"><svg class="ico"><use href="#i-chart"/></svg>Báo cáo</button>
+      <button data-view="log"><svg class="ico"><use href="#i-book"/></svg>Nhật ký</button>
+      <button data-view="settings"><svg class="ico"><use href="#i-gear"/></svg>Cài đặt</button>
     </nav>
+    <div class="side-title">Vùng</div>
+    <div id="sideArea"></div>
     <div class="side-title">Dự án</div>
     <div id="sideProj"></div>
     <div class="side-foot">
       <span class="muted" id="syncStatus">Chỉ lưu trên máy</span>
-      <button class="btn sm ghost" id="themeBtn" title="Sáng / Tối">◐</button>
+      <button class="btn sm ghost" id="themeBtn" title="Sáng / Tối" aria-label="Đổi giao diện sáng tối"><svg class="ico"><use href="#i-moon"/></svg></button>
     </div>
   </aside>
 
@@ -211,17 +284,20 @@
         <div class="chips" id="chips"></div>
       </div>
       <form class="quick" id="addForm">
-        <span style="color:var(--accent);font-size:18px">＋</span>
-        <input name="title" placeholder="Thêm việc mới… (Enter để lưu)" required autocomplete="off">
+        <span class="plus"><svg class="ico"><use href="#i-plus"/></svg></span>
+        <input name="title" placeholder="Thêm việc mới, nhấn Enter để lưu" required autocomplete="off">
+        <select name="area" class="pill" title="Vùng"><option value="work">Công việc</option><option value="personal">Cá nhân</option></select>
         <input name="project" placeholder="# Dự án" list="projList" class="pill" style="width:120px">
+        <input name="est" placeholder="Mất bao lâu" class="pill" style="width:104px" title="Ước lượng thời gian (vd 30p, 1h30)">
         <select name="priority" class="pill">
-          <option value="med">Vừa</option><option value="high">Cao</option><option value="low">Thấp</option>
+          <option value="med">Ưu tiên vừa</option><option value="high">Ưu tiên cao</option><option value="low">Ưu tiên thấp</option>
         </select>
         <input name="due" type="date" title="Hạn chót" class="pill">
         <button class="btn primary">Thêm</button>
       </form>
       <div class="toolbar">
-        <input id="search" placeholder="🔍  Tìm việc…">
+        <input id="search" placeholder="Tìm việc">
+        <select id="areaFilter"><option value="">Mọi vùng</option><option value="work">Công việc</option><option value="personal">Cá nhân</option></select>
         <select id="projFilter"><option value="">Tất cả dự án</option></select>
       </div>
       <datalist id="projList"></datalist>
@@ -234,9 +310,9 @@
       <div class="chat">
         <div class="msgs" id="msgs"></div>
         <div class="hints">
-          <button class="btn sm" data-hint="Tóm tắt hôm nay giúp tôi: việc nào đến hạn, quá hạn, nên làm gì trước?">☀ Tóm tắt hôm nay</button>
-          <button class="btn sm" data-hint="Chọn 3 việc quan trọng nhất tôi nên làm hôm nay và giải thích ngắn.">★ 3 việc quan trọng</button>
-          <button class="btn sm" data-hint="Đánh giá tiến độ tuần này của tôi và gợi ý cải thiện.">📈 Đánh giá tuần</button>
+          <button class="btn sm" data-hint="Tóm tắt hôm nay giúp tôi: việc nào đến hạn, quá hạn, nên làm gì trước?">Tóm tắt hôm nay</button>
+          <button class="btn sm" data-hint="Chọn 3 việc quan trọng nhất tôi nên làm hôm nay và giải thích ngắn.">3 việc quan trọng nhất</button>
+          <button class="btn sm" data-hint="Đánh giá tiến độ tuần này của tôi và gợi ý cải thiện.">Đánh giá tuần này</button>
         </div>
         <form class="chatbar" id="chatForm">
           <textarea name="q" placeholder="VD: Thứ 6 nộp báo cáo đối soát tháng 10, gấp. Mai gọi ngân hàng hỏi giao dịch lỗi."></textarea>
@@ -250,17 +326,19 @@
       <div class="page-head"><div><h1>Báo cáo</h1><div class="sub">Theo dõi tiến độ của bạn</div></div></div>
       <div class="stats" id="stats"></div>
       <div class="box"><b>Việc hoàn thành 14 ngày qua</b><div class="bars" id="bars"></div></div>
+      <div class="box"><b>Ước lượng so với thực tế (30 ngày)</b><div id="estReport"></div></div>
+      <div class="box"><b>Theo vùng</b><table id="areaTable"></table></div>
       <div class="box"><b>Theo dự án</b><table id="projTable"></table></div>
       <div class="box"><b>Việc quá hạn</b><table id="lateTable"></table></div>
     </section>
 
     <!-- LOG -->
     <section data-page="log" hidden class="narrow">
-      <div class="page-head"><div><h1>Nhật ký cuối ngày</h1><div class="sub">3 dòng để đầu óc nhẹ nhàng</div></div></div>
+      <div class="page-head"><div><h1>Nhật ký cuối ngày</h1><div class="sub">Ba dòng trước khi nghỉ, để mai vào việc ngay</div></div></div>
       <form id="logForm" class="box">
-        <label class="f">✅ Đã xong hôm nay</label><textarea name="done"></textarea>
-        <label class="f">⏳ Đang chờ ai / vướng gì</label><textarea name="waiting"></textarea>
-        <label class="f">➡ Mai làm gì</label><textarea name="tomorrow"></textarea>
+        <label class="f">Đã xong hôm nay</label><textarea name="done"></textarea>
+        <label class="f">Đang chờ ai, vướng gì</label><textarea name="waiting"></textarea>
+        <label class="f">Mai làm gì</label><textarea name="tomorrow"></textarea>
         <div class="row"><button class="btn primary">Lưu nhật ký</button></div>
       </form>
       <div id="logList"></div>
@@ -276,6 +354,23 @@
         <label class="f">Model</label>
         <div style="display:flex;gap:8px"><input id="model" placeholder="gemini-3.8-flash" list="modelList" style="flex:1"><button class="btn" id="listModels" type="button">Xem model có sẵn</button></div><datalist id="modelList"></datalist><p class="muted" id="modelHint"></p>
         <div class="row"><button class="btn primary" id="saveAi">Lưu</button></div>
+      </div>
+      <div class="box">
+        <b>Quỹ thời gian & tập trung</b>
+        <p class="muted">Khi tổng ước lượng của việc hôm nay vượt số giờ này, app sẽ cảnh báo. Nên đặt thấp hơn giờ làm việc vì còn họp, email và việc phát sinh.</p>
+        <label class="f">Số giờ làm việc tập trung mỗi ngày</label>
+        <input id="capacity" type="number" min="1" step="0.5" placeholder="6">
+        <label class="f">Độ dài một phiên tập trung (phút)</label>
+        <input id="focusLen" type="number" min="5" step="5" placeholder="25">
+        <div class="row"><button class="btn primary" id="saveCap">Lưu</button></div>
+      </div>
+      <div class="box">
+        <b>Nhắc việc</b>
+        <p class="muted">Nhắc các task có ngày + giờ. Thông báo chỉ hiện khi app đang mở (trên trình duyệt hoặc tab nền). Muốn nhắc chắc chắn trên điện thoại kể cả khi tắt app, bấm 📆 trên thẻ task để thêm vào Google Calendar.</p>
+        <label class="f">Nhắc trước (phút)</label>
+        <input id="remindBefore" type="number" min="0" step="5" placeholder="15">
+        <p class="muted" id="notifState"></p>
+        <div class="row"><button class="btn" id="notifBtn">Bật thông báo trình duyệt</button><button class="btn primary" id="saveRemind">Lưu</button></div>
       </div>
       <div class="box">
         <b>Đồng bộ laptop ↔ điện thoại (Firebase)</b>
@@ -301,6 +396,8 @@
   </div>
 </div>
 
+<div class="toasts" id="toasts"></div>
+<div class="focusbar" id="focusbar" hidden></div>
 <dialog id="editDlg">
   <form method="dialog" id="editForm">
     <h2>Chi tiết công việc</h2>
@@ -312,8 +409,17 @@
       <div style="flex:1"><label class="f">Hạn chót</label><input name="due" type="date"></div>
       <div style="flex:1"><label class="f">Giờ</label><input name="time" type="time"></div>
     </div>
+    <div style="display:flex;gap:10px">
+      <div style="flex:1"><label class="f">Vùng</label><select name="area"><option value="work">Công việc</option><option value="personal">Cá nhân</option></select></div>
+      <div style="flex:1"><label class="f">Ước lượng</label><input name="est" placeholder="vd 1h30"></div>
+      <div style="flex:1"><label class="f">Đã làm</label><input name="spent" placeholder="vd 45p"></div>
+    </div>
     <label class="check"><input type="checkbox" name="top3"> ★ Thuộc "3 việc quan trọng hôm nay"</label>
-    <label class="f">Checklist – mỗi dòng một việc con, thêm "[x] " nếu đã xong</label><textarea name="subs" rows="4"></textarea>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:8px">
+      <label class="f">Các bước – mỗi dòng 1 bước; "~30p" ở cuối = ước lượng; "[x] " ở đầu = đã xong</label>
+      <button type="button" class="btn sm" id="dlgSplit">✦ Chia nhỏ bằng AI</button>
+    </div>
+    <textarea name="subs" rows="6"></textarea>
     <label class="f">Ghi chú</label><textarea name="note" rows="3"></textarea>
     <p class="muted" id="histText"></p>
     <div class="row">
@@ -339,7 +445,21 @@ const $ = s => document.querySelector(s);
 const blank = { tasks:[], logs:[], convs:[], curConv:null, updatedAt:0 };
 const normalize = s => { s = { ...blank, ...s };
   if (s.chat) { if (s.chat.length) s.convs.unshift({ id: crypto.randomUUID(), title: s.chat.find(m => m.role === 'user')?.text.slice(0, 40) || 'Cuộc trò chuyện', msgs: s.chat, at: nowISO() }); delete s.chat; }
-  if (!s.convs.some(c => c.id === s.curConv)) s.curConv = s.convs[0]?.id || null; s.tasks.forEach(t => { t.history ??= []; t.subs ??= []; t.project ??= ''; t.note ??= ''; t.due ??= ''; t.created ??= nowISO(); }); return s; };
+  if (!s.convs.some(c => c.id === s.curConv)) s.curConv = s.convs[0]?.id || null; s.tasks.forEach(t => { t.history ??= []; t.subs ??= []; t.project ??= ''; t.note ??= ''; t.due ??= ''; t.created ??= nowISO(); t.area ??= 'work'; t.est ??= 0; t.spent ??= 0; t.subs.forEach(x => x.est ??= 0); }); return s; };
+
+/* Durations are stored in minutes. parseDur('1h30') = 90, parseDur('45p') = 45, parseDur('2') = 120 (bare number = hours if <= 12). */
+const parseDur = v => {
+  v = String(v ?? '').trim().toLowerCase().replace(',', '.'); if (!v) return 0;
+  const h = v.match(/([\d.]+)\s*(h|g|giờ)/), m = v.match(/([\d.]+)\s*(p|m|phút|min)(?![a-z])/);
+  if (h || m) return Math.round((h ? +h[1] * 60 : 0) + (m ? +m[1] : 0) + (h && !m ? (+(v.match(/h\s*(\d+)$/)?.[1] || 0)) : 0));
+  const n = +v; return isNaN(n) ? 0 : Math.round(n <= 12 ? n * 60 : n);
+};
+const dur = m => { m = Math.round(m || 0); if (!m) return ''; const h = Math.floor(m / 60), r = m % 60; return h ? h + 'h' + (r ? pad(r) : '') : r + 'p'; };
+const pad = n => String(n).padStart(2, '0');
+const AREA = { work: 'Công việc', personal: 'Cá nhân' };
+const ico = n => `<svg class="ico"><use href="#i-${n}"/></svg>`;
+const taskEst = t => t.subs.length && t.subs.some(s => s.est) ? t.subs.filter(s => !s.done).reduce((a, s) => a + (s.est || 0), 0) : (t.est || 0);
+const nextStep = t => t.subs.find(s => !s.done);
 let state = normalize(JSON.parse(localStorage.getItem(KEY) || localStorage.getItem('mywork.v1') || '{}'));
 let cfg = JSON.parse(localStorage.getItem(CFG) || '{}');
 const saveCfg = () => localStorage.setItem(CFG, JSON.stringify(cfg));
@@ -357,7 +477,9 @@ function renderAll() { renderBoard(); renderChat(); if (!$('[data-page=report]')
 /* ========== Tasks ========== */
 function newTask(o) {
   const t = { id: crypto.randomUUID(), title: String(o.title).trim(), priority: PRI[o.priority] ? o.priority : 'med',
-    due: o.due || '', time: /^\d{1,2}:\d{2}$/.test(o.time || '') ? o.time.padStart(5, '0') : '', project: (o.project || '').trim(), note: o.note || '', subs: [], top3: false,
+    due: o.due || '', time: /^\d{1,2}:\d{2}$/.test(o.time || '') ? o.time.padStart(5, '0') : '', project: (o.project || '').trim(), note: o.note || '', top3: false,
+    area: o.area === 'personal' ? 'personal' : 'work', est: Math.max(0, Math.round(+o.est || 0)), spent: 0,
+    subs: (o.steps || []).filter(s => s?.text || typeof s === 'string').map(s => ({ text: String(s.text ?? s).trim(), est: Math.max(0, Math.round(+s.est || 0)), done: false })),
     status: 'todo', created: nowISO(), doneAt: null, history: [{ at: nowISO(), to: 'todo' }] };
   state.tasks.push(t); return t;
 }
@@ -370,7 +492,10 @@ function setStatus(t, status) {
 const projects = () => [...new Set(state.tasks.map(t => t.project).filter(Boolean))].sort();
 
 function renderSide() {
-  const cur = $('#projFilter').value, open = state.tasks.filter(t => t.status !== 'done');
+  const ca = $('#areaFilter').value, openAll = state.tasks.filter(t => t.status !== 'done');
+  $('#sideArea').innerHTML = [['', 'Tất cả vùng'], ['work', AREA.work], ['personal', AREA.personal]]
+    .map(([v, l]) => `<button data-area="${v}" class="${v === ca ? 'active' : ''}">${v ? `<i class="swatch" style="background:var(--${v})"></i>` : ''}<span>${l}</span><span class="n">${openAll.filter(t => !v || t.area === v).length}</span></button>`).join('');
+  const cur = $('#projFilter').value, open = openAll.filter(t => !ca || t.area === ca);
   $('#sideProj').innerHTML = [['', 'Tất cả', open.length], ...projects().map(p => [p, '# ' + p, open.filter(t => t.project === p).length])]
     .map(([v, l, n]) => `<button data-proj="${esc(v)}" class="${v === cur ? 'active' : ''}"><span>${esc(l)}</span><span class="n">${n}</span></button>`).join('');
 }
@@ -378,69 +503,83 @@ $('#sideProj').addEventListener('click', e => {
   const b = e.target.closest('[data-proj]'); if (!b) return;
   $('#projFilter').value = b.dataset.proj; show('board'); renderBoard();
 });
+$('#sideArea').addEventListener('click', e => {
+  const b = e.target.closest('[data-area]'); if (!b) return;
+  $('#areaFilter').value = b.dataset.area; cfg.area = b.dataset.area; saveCfg();
+  if (b.dataset.area) $('#addForm').elements.area.value = b.dataset.area;
+  show('board'); renderBoard();
+});
 
 function renderBoard() {
   const projs = projects();
   $('#projList').innerHTML = projs.map(p => `<option value="${esc(p)}">`).join('');
   const pf = $('#projFilter'), cur = pf.value;
   pf.innerHTML = '<option value="">Tất cả dự án</option>' + projs.map(p => `<option ${p === cur ? 'selected' : ''}>${esc(p)}</option>`).join('');
-  const q = $('#search').value.trim().toLowerCase();
+  const q = $('#search').value.trim().toLowerCase(), af = $('#areaFilter').value;
   const board = $('#board'); board.innerHTML = '';
   for (const [key, label, color] of COLS) {
     const items = state.tasks
-      .filter(t => t.status === key && (!pf.value || t.project === pf.value)
+      .filter(t => t.status === key && (!pf.value || t.project === pf.value) && (!af || t.area === af)
         && (!q || `${t.title} ${t.note} ${t.project}`.toLowerCase().includes(q)))
       .filter(t => key !== 'done' || t.doneAt >= daysAgo(14))
       .sort((a, b) => (!!b.top3 - !!a.top3) || PRI[a.priority][2] - PRI[b.priority][2] || (a.due || '9').localeCompare(b.due || '9') || (a.time || '9').localeCompare(b.time || '9'));
     const col = document.createElement('div');
     col.className = 'col'; col.dataset.status = key;
     col.innerHTML = `<div class="col-head"><span class="dot" style="background:${color}"></span>${label}<span class="count">${items.length}</span></div>`
-      + (items.length ? '' : `<div class="empty">${key === 'todo' ? 'Chưa có việc nào. Thêm ở ô phía trên ✨' : 'Kéo việc vào đây'}</div>`);
+      + (items.length ? '' : `<div class="empty">${key === 'todo' ? 'Chưa có việc. Gõ vào ô phía trên hoặc kể cho Trợ lý AI.' : 'Kéo thẻ vào đây'}</div>`);
     for (const t of items) {
       const late = t.due && t.status !== 'done' && t.due < today();
       const dueToday = t.due === today() && t.status !== 'done';
       const sd = t.subs.filter(s => s.done).length;
       const star = t.top3 && t.status !== 'done';
+      const ns = nextStep(t), left = taskEst(t), running = focus?.id === t.id;
       col.insertAdjacentHTML('beforeend', `
-        <div class="card ${star ? 'top3' : ''} ${t.status === 'done' ? 'done' : ''}" draggable="true" data-id="${t.id}">
+        <div class="card area-${t.area} ${t.status === 'done' ? 'done' : ''}" draggable="true" data-id="${t.id}">
           <div class="top">
-            <div class="t">${star ? '<span style="color:#f59e0b">★</span> ' : ''}${esc(t.title)}</div>
-            <span class="acts"><button data-act="edit" title="Sửa">✎</button><button data-act="del" title="Xoá">🗑</button></span>
+            <div class="t">${star ? '<span class="star" title="Một trong 3 việc quan trọng hôm nay">★</span>' : ''}${esc(t.title)}</div>
+            <span class="acts">${t.status !== 'done' ? `<button data-act="focus" title="Tập trung ${cfg.focusLen || 25} phút">${ico(running ? 'pause' : 'play')}</button><button data-act="split" title="Chia nhỏ bằng AI">${ico('spark')}</button>` : ''}${t.due ? `<button data-act="cal" title="Thêm vào Google Calendar">${ico('cal')}</button>` : ''}<button data-act="edit" title="Sửa">${ico('edit')}</button><button data-act="del" title="Xoá">${ico('trash')}</button></span>
           </div>
           ${t.note ? `<div class="note">${esc(t.note)}</div>` : ''}
-          ${t.subs.length ? `<div class="sub">${t.subs.map((s, i) => `<label><input type="checkbox" data-sub="${i}" ${s.done ? 'checked' : ''}>${esc(s.text)}</label>`).join('')}</div>
+          ${t.subs.length ? `<div class="sub">${t.subs.map((s, i) => `<label class="${s === ns && t.status !== 'done' ? 'nextstep' : ''}"><input type="checkbox" data-sub="${i}" ${s.done ? 'checked' : ''}>${s === ns && t.status !== 'done' ? '→ ' : ''}${esc(s.text)}${s.est ? `<span class="est">${dur(s.est)}</span>` : ''}</label>`).join('')}</div>
             <div class="progress"><span style="width:${100 * sd / t.subs.length}%"></span></div>` : ''}
           <div class="meta">
             <span class="tag ${PRI[t.priority][1]}">${PRI[t.priority][0]}</span>
-            ${t.project ? `<span class="tag proj"># ${esc(t.project)}</span>` : ''}
-            ${t.due ? `<span class="due ${late ? 'overdue' : ''}" ${dueToday ? 'style="color:var(--amber);font-weight:600"' : ''}>📅 ${late ? 'Trễ · ' : dueToday ? 'Hôm nay · ' : ''}${fmt(t.due)}${t.time ? ' · ' + t.time : ''}</span>` : t.time ? `<span class="due">🕒 ${t.time}</span>` : ''}
-            ${t.subs.length ? `<span style="margin-left:auto">☑ ${sd}/${t.subs.length}</span>` : ''}
+                        ${left || t.spent ? `<span title="Còn lại theo ước lượng / đã làm">${ico('clock')}${left ? 'còn ' + dur(left) : ''}${left && t.spent ? ', ' : ''}${t.spent ? 'đã làm ' + dur(t.spent) : ''}</span>` : ''}
+            ${t.project ? `<span class="tag proj">#${esc(t.project)}</span>` : ''}
+            ${t.due ? `<span class="due ${late ? 'overdue' : dueToday ? 'today' : ''}">${ico('cal')}${late ? 'Trễ, ' + fmt(t.due) : dueToday ? 'Hôm nay' : fmt(t.due)}${t.time ? ' ' + t.time : ''}</span>` : t.time ? `<span class="due">${ico('clock')}${t.time}</span>` : ''}
+            ${t.subs.length ? `<span style="margin-left:auto">${sd}/${t.subs.length} bước</span>` : ''}
           </div>
           <div class="mv">${COLS.filter(c => c[0] !== key).map(c => `<button class="btn sm" data-move="${c[0]}">→ ${c[1]}</button>`).join('')}</div>
         </div>`);
     }
     board.appendChild(col);
   }
-  const open = state.tasks.filter(t => t.status !== 'done');
+  const open = state.tasks.filter(t => t.status !== 'done' && (!af || t.area === af));
   const late = open.filter(t => t.due && t.due < today()).length;
   const d = new Date();
-  $('#pageTitle').textContent = pf.value ? '# ' + pf.value : 'Hôm nay';
+  // Today's load: tasks due today/overdue, starred, or in progress (counted once).
+  const todayList = open.filter(t => (t.due && t.due <= today()) || t.top3 || t.status === 'doing');
+  const load = todayList.reduce((a, t) => a + taskEst(t), 0), cap = (cfg.capacity || 6) * 60;
+  $('#pageTitle').textContent = pf.value ? '#' + pf.value : af ? AREA[af] : 'Hôm nay';
   $('#pageSub').textContent = d.toLocaleDateString('vi-VN', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
-  $('#chips').innerHTML = [
-    ['✅', 'xong hôm nay', state.tasks.filter(t => t.doneAt === today()).length, ''],
-    ['📅', 'đến hạn', open.filter(t => t.due === today()).length, ''],
-    ['⚠', 'quá hạn', late, late ? 'bad' : ''],
-    ['○', 'đang mở', open.length, '']
-  ].map(([i, l, n, c]) => `<span class="chip ${c}">${i} <b>${n}</b> ${l}</span>`).join('');
+  const loadW = todayList.filter(t => t.area !== 'personal').reduce((a, t) => a + taskEst(t), 0), loadP = load - loadW, scale = Math.max(cap, load);
+  const lvl = load > cap ? 'bad' : load > cap * .8 ? 'warn' : '';
+  $('#chips').innerHTML = `<div class="budget ${lvl}" title="Tổng ước lượng của việc đến hạn, quá hạn, đang làm hoặc gắn sao hôm nay">
+      <div class="budget-top"><b>${dur(load) || '0p'} <small>/ ${dur(cap)}</small></b><span>${lvl === 'bad' ? 'Quá tải, nên dời bớt việc' : lvl === 'warn' ? 'Gần kín lịch' : load ? 'Còn ' + dur(cap - load) + ' trống' : 'Chưa ước lượng việc nào hôm nay'}</span></div>
+      <div class="meter"><i class="w" style="width:${100 * loadW / scale}%"></i><i class="p" style="width:${100 * loadP / scale}%"></i></div>
+    </div>
+    <div class="stats-line"><span><b>${state.tasks.filter(t => t.doneAt === today() && (!af || t.area === af)).length}</b> xong hôm nay</span><span><b>${open.filter(t => t.due === today()).length}</b> đến hạn</span><span class="${late ? 'bad' : ''}"><b>${late}</b> quá hạn</span><span><b>${open.length}</b> đang mở</span></div>`;
   renderSide();
 }
 
 $('#addForm').addEventListener('submit', e => {
   e.preventDefault(); const f = e.target;
-  newTask({ title: f.elements.title.value, priority: f.elements.priority.value, due: f.elements.due.value, project: f.elements.project.value || $('#projFilter').value });
-  save(); f.elements.title.value = ''; f.elements.due.value = ''; renderBoard(); f.elements.title.focus();
+  newTask({ title: f.elements.title.value, priority: f.elements.priority.value, due: f.elements.due.value, project: f.elements.project.value || $('#projFilter').value,
+    area: f.elements.area.value, est: parseDur(f.elements.est.value) });
+  save(); f.elements.title.value = ''; f.elements.due.value = ''; f.elements.est.value = ''; renderBoard(); f.elements.title.focus();
 });
 $('#search').addEventListener('input', renderBoard);
+$('#areaFilter').addEventListener('change', e => { cfg.area = e.target.value; saveCfg(); if (e.target.value) $('#addForm').elements.area.value = e.target.value; renderBoard(); });
 $('#projFilter').addEventListener('change', renderBoard);
 
 const board = $('#board');
@@ -464,20 +603,33 @@ board.addEventListener('click', e => {
   if (mv) { setStatus(t, mv.dataset.move); save(); renderBoard(); return; }
   const act = e.target.closest('[data-act]')?.dataset.act;
   if (act === 'del' && confirm(`Xoá "${t.title}"?`)) { state.tasks = state.tasks.filter(x => x !== t); save(); renderBoard(); }
-  if (act === 'edit') {
+  if (act === 'cal') { window.open(calLink(t), '_blank'); return; }
+  if (act === 'focus') { focus?.id === t.id ? stopFocus() : startFocus(t); return; }
+  if (act === 'split') { openEdit(t); splitWithAI(); return; }
+  if (act === 'edit') openEdit(t);
+});
+const subsToText = subs => subs.map(s => (s.done ? '[x] ' : '') + s.text + (s.est ? ' ~' + dur(s.est) : '')).join('\n');
+const textToSubs = v => v.split('\n').map(l => l.trim()).filter(Boolean).map(l => {
+  const done = /^\[x\]\s*/i.test(l); l = l.replace(/^\[x\]\s*/i, '');
+  const m = l.match(/\s*~\s*([\dhgpm.,\s]+)$/i);
+  return { done, text: m ? l.slice(0, m.index).trim() : l, est: m ? parseDur(m[1]) : 0 };
+});
+function openEdit(t) {
+  {
     editing = t;
     ef.title.value = t.title; ef.project.value = t.project; ef.priority.value = t.priority; ef.due.value = t.due; ef.time.value = t.time || '';
     ef.top3.checked = !!t.top3; ef.note.value = t.note;
-    ef.subs.value = t.subs.map(s => (s.done ? '[x] ' : '') + s.text).join('\n');
+    ef.area.value = t.area; ef.est.value = dur(t.est); ef.spent.value = dur(t.spent);
+    ef.subs.value = subsToText(t.subs);
     $('#histText').textContent = 'Lịch sử: ' + t.history.map(h => `${fmt(h.at)} ${h.from ? ST[h.from] + ' → ' : 'Tạo · '}${ST[h.to]}`).join('  |  ');
-    dlg.showModal();
+    if (!dlg.open) dlg.showModal();
   }
-});
+}
 dlg.addEventListener('close', () => {
   if (dlg.returnValue === 'save' && editing) {
     Object.assign(editing, { title: ef.title.value.trim() || editing.title, project: ef.project.value.trim(), priority: ef.priority.value,
       due: ef.due.value, time: ef.time.value, top3: ef.top3.checked, note: ef.note.value,
-      subs: ef.subs.value.split('\n').map(l => l.trim()).filter(Boolean).map(l => ({ done: /^\[x\]\s*/i.test(l), text: l.replace(/^\[x\]\s*/i, '') })) });
+      area: ef.area.value, est: parseDur(ef.est.value), spent: parseDur(ef.spent.value), subs: textToSubs(ef.subs.value) });
     save(); renderBoard();
   }
   editing = null;
@@ -486,20 +638,20 @@ dlg.addEventListener('close', () => {
 /* ========== AI chat (Gemini) ========== */
 const SYSTEM = `Bạn là trợ lý quản lý công việc cá nhân, trả lời tiếng Việt, ngắn gọn, thân thiện.
 Nhiệm vụ: (1) tách lời người dùng thành task khi họ nhắc việc cần làm; (2) đề xuất cập nhật task hiện có (đổi trạng thái, ưu tiên, hạn, đánh dấu top3) khi họ báo đã làm/đổi kế hoạch; (3) trả lời câu hỏi về tiến độ dựa trên danh sách task.
-Quy tắc: chỉ dùng id có trong danh sách khi cập nhật; ngày dạng YYYY-MM-DD, tự quy đổi "mai", "thứ 6"... theo ngày hôm nay; priority là high|med|low; status là todo|doing|done. Task chỉ được tạo khi người dùng bấm Áp dụng, nên trong reply hãy nói "mình đề xuất..." chứ không nói "đã thêm". Tiêu đề task: viết lại ngắn gọn, rõ nghĩa, đúng chính tả tiếng Việt, viết hoa chữ đầu, bắt đầu bằng động từ, mở rộng từ viết tắt quen thuộc (vd "coi t1 đánh cktg" -> "Xem T1 thi đấu CKTG"); không đưa ngày/giờ vào tiêu đề. Giờ cụ thể (vd "5h sáng", "9h", "14h30") ghi vào trường "time" dạng HH:MM 24 giờ; không có giờ thì để "". note chỉ dùng cho chi tiết thêm. Một việc chỉ được coi là đã có khi nằm trong "Danh sách task" bên dưới; không suy ra từ lịch sử chat. Không bịa task. Nếu không có gì để tạo/cập nhật thì để mảng rỗng.
-Luôn trả về JSON đúng dạng: {"reply": string, "create": [{"title","priority","due","time","project","note"}], "update": [{"id","status"?,"priority"?,"due"?,"time"?,"top3"?}]}`;
+Quy tắc: chỉ dùng id có trong danh sách khi cập nhật; ngày dạng YYYY-MM-DD, tự quy đổi "mai", "thứ 6"... theo ngày hôm nay; priority là high|med|low; status là todo|doing|done. Task chỉ được tạo khi người dùng bấm Áp dụng, nên trong reply hãy nói "mình đề xuất..." chứ không nói "đã thêm". Tiêu đề task: viết lại ngắn gọn, rõ nghĩa, đúng chính tả tiếng Việt, viết hoa chữ đầu, bắt đầu bằng động từ, mở rộng từ viết tắt quen thuộc (vd "coi t1 đánh cktg" -> "Xem T1 thi đấu CKTG"); không đưa ngày/giờ vào tiêu đề. Giờ cụ thể (vd "5h sáng", "9h", "14h30") ghi vào trường "time" dạng HH:MM 24 giờ; không có giờ thì để "". note chỉ dùng cho chi tiết thêm. "area": "work" nếu là việc công ty/công việc, "personal" nếu là việc riêng (giải trí, gia đình, sức khoẻ, mua sắm...). "est": ước lượng số PHÚT cần làm (số nguyên, thực tế, hơi dư một chút; 0 nếu không đoán được). Nếu việc lớn/nhiều bước (cần > 60 phút hoặc người dùng nêu nhiều bước) thì điền "steps": 3-7 bước cụ thể, mỗi bước bắt đầu bằng động từ và làm được trong một lần ngồi (≤ 90 phút), kèm "est" phút; việc nhỏ thì steps để []. Một việc chỉ được coi là đã có khi nằm trong "Danh sách task" bên dưới; không suy ra từ lịch sử chat. Không bịa task. Nếu không có gì để tạo/cập nhật thì để mảng rỗng.
+Luôn trả về JSON đúng dạng: {"reply": string, "create": [{"title","priority","due","time","project","note","area","est","steps":[{"text","est"}]}], "update": [{"id","status"?,"priority"?,"due"?,"time"?,"top3"?}]}`;
 
 function context() {
   const list = state.tasks.filter(t => t.status !== 'done' || t.doneAt >= daysAgo(7))
-    .map(t => `${t.id}|${t.title}|${t.status}|${t.priority}|hạn:${t.due || '-'}${t.time ? ' ' + t.time : ''}|dự án:${t.project || '-'}|top3:${!!t.top3}${t.doneAt ? '|xong:' + t.doneAt : ''}`).join('\n');
-  return `Hôm nay: ${today()} (${new Date().toLocaleDateString('vi-VN', { weekday: 'long' })}).\nDanh sách task (id|tiêu đề|trạng thái|ưu tiên|hạn|dự án|top3):\n${list || '(trống)'}`;
+    .map(t => `${t.id}|${t.title}|${t.status}|${t.priority}|hạn:${t.due || '-'}${t.time ? ' ' + t.time : ''}|dự án:${t.project || '-'}|vùng:${t.area}|còn:${taskEst(t)}p|đã làm:${t.spent}p|top3:${!!t.top3}${nextStep(t) ? '|bước tiếp:' + nextStep(t).text : ''}${t.doneAt ? '|xong:' + t.doneAt : ''}`).join('\n');
+  return `Hôm nay: ${today()} (${new Date().toLocaleDateString('vi-VN', { weekday: 'long' })}). Quỹ thời gian tập trung mỗi ngày: ${cfg.capacity || 6} giờ.\nDanh sách task (id|tiêu đề|trạng thái|ưu tiên|hạn|dự án|vùng|còn lại ước lượng|đã làm|top3|bước tiếp):\n${list || '(trống)'}`;
 }
 
-async function askGemini(text) {
+async function askGemini(text, opts = {}) {
   if (!cfg.apiKey) throw new Error('Chưa có Gemini API key. Vào Cài đặt để nhập.');
-  const history = state.chat.slice(-8).map(m => ({ role: m.role, parts: [{ text: m.text + (m.role === 'model' && (m.create?.length || m.update?.length) && !m.applied ? '\n[Ghi chú hệ thống: đề xuất này CHƯA được người dùng áp dụng]' : '') + (m.role === 'model' && m.applied && !m.create?.length && !m.update?.length ? '\n[Ghi chú hệ thống: người dùng đã bỏ qua đề xuất này]' : '') }] }));
+  const history = opts.noHistory ? [] : state.chat.slice(-8).map(m => ({ role: m.role, parts: [{ text: m.text + (m.role === 'model' && (m.create?.length || m.update?.length) && !m.applied ? '\n[Ghi chú hệ thống: đề xuất này CHƯA được người dùng áp dụng]' : '') + (m.role === 'model' && m.applied && !m.create?.length && !m.update?.length ? '\n[Ghi chú hệ thống: người dùng đã bỏ qua đề xuất này]' : '') }] }));
   const body = {
-    systemInstruction: { parts: [{ text: SYSTEM + '\n\n' + context() }] },
+    systemInstruction: { parts: [{ text: (opts.system || SYSTEM) + '\n\n' + context() }] },
     contents: [...history, { role: 'user', parts: [{ text }] }],
     generationConfig: { responseMimeType: 'application/json', temperature: 0.4 }
   };
@@ -523,7 +675,7 @@ async function askGemini(text) {
   try { return JSON.parse(raw.replace(/^```json\s*|```$/g, '')); } catch { return { reply: raw, create: [], update: [] }; }
 }
 
-const bubble = (role, html) => `<div class="msg ${role}">${role === 'model' ? '<div class="av">✦</div>' : ''}<div class="bub">${html}</div></div>`;
+const bubble = (role, html) => `<div class="msg ${role}">${role === 'model' ? '<div class="av"><svg class="ico"><use href="#i-spark"/></svg></div>' : ''}<div class="bub">${html}</div></div>`;
 const conv = () => state.convs.find(c => c.id === state.curConv);
 Object.defineProperty(state, 'chat', { get: () => conv()?.msgs || [], configurable: true });
 function renderConvs() {
@@ -550,7 +702,8 @@ function renderChat(pending) {
     const c = m.create || [], u = (m.update || []).filter(x => state.tasks.some(t => t.id === x.id));
     if (m.role === 'model' && (c.length || u.length)) {
       prop = `<div class="prop">
-        ${c.map(x => `<div class="it">＋ <b>${esc(x.title)}</b> · ${PRI[x.priority]?.[0] || 'Vừa'}${x.due ? ' · hạn ' + fmt(x.due) : ''}${x.time ? ' ' + esc(x.time) : ''}${x.project ? ' · #' + esc(x.project) : ''}</div>`).join('')}
+        ${c.map(x => `<div class="it">＋ <b>${esc(x.title)}</b> · ${x.area === 'personal' ? 'Cá nhân' : 'Công việc'} · ${PRI[x.priority]?.[0] || 'Vừa'}${x.due ? ' · hạn ' + fmt(x.due) : ''}${x.time ? ' ' + esc(x.time) : ''}${x.project ? ' · #' + esc(x.project) : ''}${+x.est ? ' · khoảng ' + dur(+x.est) : ''}
+          ${(x.steps || []).length ? `<div class="muted" style="margin:2px 0 0 16px">${x.steps.map((s, k) => `${k + 1}. ${esc(s.text ?? s)}${+s.est ? ' (' + dur(+s.est) + ')' : ''}`).join('<br>')}</div>` : ''}</div>`).join('')}
         ${u.map(x => { const t = state.tasks.find(t => t.id === x.id);
           return `<div class="it">✎ <b>${esc(t.title)}</b>: ${[x.status && '→ ' + ST[x.status], x.priority && 'ưu tiên ' + PRI[x.priority]?.[0], x.due && 'hạn ' + fmt(x.due), x.time && 'giờ ' + esc(x.time), x.top3 !== undefined && (x.top3 ? '★ top 3' : 'bỏ top 3')].filter(Boolean).join(', ')}</div>`; }).join('')}
         <div class="row">${m.applied ? '<span class="muted">✓ Đã áp dụng</span>' : `<button class="btn sm primary" data-apply="${i}">Áp dụng</button><button class="btn sm" data-skip="${i}">Bỏ qua</button>`}</div>
@@ -609,6 +762,59 @@ $('#chatForm').addEventListener('submit', e => { e.preventDefault(); const q = e
 $('#chatForm').elements.q.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('#chatForm').requestSubmit(); } });
 document.querySelectorAll('[data-hint]').forEach(b => b.addEventListener('click', () => send(b.dataset.hint)));
 
+/* ========== AI breakdown (from the task dialog) ========== */
+const SPLIT = `Bạn giúp chia một công việc thành các bước nhỏ, trả lời tiếng Việt.
+Trả về JSON: {"steps":[{"text","est"}],"est": tổng phút}. 3-7 bước, theo thứ tự làm; mỗi bước cụ thể, bắt đầu bằng động từ, làm được trong một lần ngồi (≤ 90 phút); "est" là số phút thực tế (hơi dư một chút, vì người ta hay đánh giá thấp thời gian). Giữ nguyên các bước người dùng đã viết sẵn (kể cả bước đã xong) và chỉ bổ sung bước còn thiếu. Không bịa thông tin ngoài đề bài.`;
+async function splitWithAI() {
+  const btn = $('#dlgSplit'); if (btn.disabled) return;
+  btn.disabled = true; btn.textContent = 'Đang chia nhỏ…';
+  try {
+    const r = await askGemini(`Công việc: ${ef.title.value}\nGhi chú: ${ef.note.value || '-'}\nCác bước hiện có:\n${ef.subs.value || '(chưa có)'}`, { system: SPLIT, noHistory: true });
+    const done = new Set(textToSubs(ef.subs.value).filter(s => s.done).map(s => s.text.toLowerCase()));
+    const steps = (r.steps || []).map(s => ({ text: String(s.text ?? s).trim(), est: Math.max(0, Math.round(+s.est || 0)) })).filter(s => s.text);
+    if (!steps.length) throw new Error('AI không trả về bước nào, thử lại nhé.');
+    ef.subs.value = subsToText(steps.map(s => ({ ...s, done: done.has(s.text.toLowerCase()) })));
+    if (!parseDur(ef.est.value)) ef.est.value = dur(steps.reduce((a, s) => a + s.est, 0));
+  } catch (e) { alert(e.message); }
+  btn.disabled = false; btn.textContent = '✦ Chia nhỏ bằng AI';
+}
+$('#dlgSplit').addEventListener('click', splitWithAI);
+
+/* ========== Focus timer (Pomodoro-style, logs real time) ========== */
+let focus = null, focusTick = null;
+function startFocus(t) {
+  if (focus) stopFocus();
+  focus = { id: t.id, start: Date.now(), len: (cfg.focusLen || 25) * 60000 };
+  if (t.status === 'todo') setStatus(t, 'doing');
+  save(); renderBoard(); renderFocus();
+  focusTick = setInterval(renderFocus, 1000);
+}
+function stopFocus(finished) {
+  if (!focus) return;
+  const t = state.tasks.find(x => x.id === focus.id), mins = Math.round((Date.now() - focus.start) / 60000);
+  clearInterval(focusTick); focus = null; $('#focusbar').hidden = true;
+  if (t && mins > 0) { t.spent = (t.spent || 0) + mins; save(); }
+  renderBoard();
+  if (t && finished) toast(t, `Xong ${mins} phút tập trung. Nghỉ 5 phút rồi làm tiếp nhé!`);
+}
+function renderFocus() {
+  if (!focus) return;
+  const t = state.tasks.find(x => x.id === focus.id); if (!t) return stopFocus();
+  const left = focus.len - (Date.now() - focus.start);
+  if (left <= 0) {
+    if ('Notification' in window && Notification.permission === 'granted') try { new Notification('⏱ Hết phiên tập trung', { body: t.title }); } catch {}
+    return stopFocus(true);
+  }
+  const ns = nextStep(t);
+  $('#focusbar').hidden = false;
+  $('#focusbar').innerHTML = `<b>${pad(Math.floor(left / 60000))}:${pad(Math.floor(left / 1000) % 60)}</b><span>${esc(ns ? ns.text : t.title)}</span>
+    ${ns ? '<button class="btn sm" data-fstep>Xong bước này</button>' : ''}<button class="btn sm" data-fstop>Dừng</button>`;
+}
+$('#focusbar').addEventListener('click', e => {
+  if (e.target.dataset.fstop !== undefined) stopFocus();
+  if (e.target.dataset.fstep !== undefined) { const t = state.tasks.find(x => x.id === focus?.id), ns = t && nextStep(t); if (ns) { ns.done = true; save(); renderBoard(); renderFocus(); } }
+});
+
 /* ========== Report ========== */
 function renderReport() {
   const T = state.tasks, open = T.filter(t => t.status !== 'done');
@@ -618,11 +824,23 @@ function renderReport() {
   const onTime = withDue.length ? Math.round(100 * withDue.filter(t => t.doneAt <= t.due).length / withDue.length) + '%' : '—';
   const lead = done7.map(t => (new Date(t.doneAt) - new Date(t.created.slice(0, 10))) / 864e5);
   const avg = lead.length ? (lead.reduce((a, b) => a + b, 0) / lead.length).toFixed(1) + ' ngày' : '—';
-  $('#stats').innerHTML = [['✅ Xong 7 ngày qua', done7.length], ['○ Đang mở', open.length], ['⚠ Quá hạn', late.length], ['🎯 Đúng hạn', onTime], ['⏱ Thời gian xử lý TB', avg]]
+  $('#stats').innerHTML = [['Xong 7 ngày qua', done7.length], ['Đang mở', open.length], ['Quá hạn', late.length], ['Đúng hạn', onTime], ['Thời gian xử lý trung bình', avg]]
     .map(([k, v]) => `<div class="stat"><span class="muted">${k}</span><b>${v}</b></div>`).join('');
   const days = [...Array(14)].map((_, i) => daysAgo(13 - i));
   const counts = days.map(d => T.filter(t => t.doneAt === d).length), max = Math.max(1, ...counts);
   $('#bars').innerHTML = days.map((d, i) => `<div class="bar" title="${counts[i]} việc">${counts[i] || ''}<span style="height:${85 * counts[i] / max}%"></span>${d.slice(8)}/${d.slice(5, 7)}</div>`).join('');
+  // Planning-fallacy check: estimate vs logged time for tasks finished in the last 30 days.
+  const done30 = T.filter(t => t.doneAt >= daysAgo(29) && t.spent && (t.est || t.subs.some(s => s.est)));
+  const planned = t => t.est || t.subs.reduce((a, s) => a + (s.est || 0), 0);
+  const sumE = done30.reduce((a, t) => a + planned(t), 0), sumS = done30.reduce((a, t) => a + t.spent, 0);
+  $('#estReport').innerHTML = done30.length
+    ? `<p>Với <b>${done30.length}</b> việc đã xong có cả ước lượng và thời gian thật: ước lượng <b>${dur(sumE)}</b>, làm thật <b>${dur(sumS)}</b> → thực tế bằng <b>${(sumS / sumE).toFixed(2)}×</b> ước lượng.</p>
+       <p class="muted">${sumS > sumE * 1.15 ? `Bạn thường đánh giá thấp thời gian. Lần sau hãy nhân ước lượng với khoảng ${(sumS / sumE).toFixed(1)}.` : sumS < sumE * .85 ? 'Bạn hay ước lượng dư, có thể nhận thêm việc trong ngày.' : 'Ước lượng của bạn khá sát thực tế 👍'}</p>
+       <table><tr><th>Việc</th><th>Ước lượng</th><th>Thực tế</th></tr>${done30.slice(-8).reverse().map(t => `<tr><td>${esc(t.title)}</td><td>${dur(planned(t))}</td><td>${dur(t.spent)}</td></tr>`).join('')}</table>`
+    : '<p class="muted">Chưa đủ dữ liệu. Nhập ước lượng cho task và dùng ▶ Tập trung (hoặc ghi "Đã làm" khi sửa task) để app so sánh.</p>';
+  const byA = { work: [0, 0, 0], personal: [0, 0, 0] };
+  T.forEach(t => { const a = byA[t.area] || byA.work; a[t.status === 'done' ? 1 : 0]++; if (t.doneAt >= daysAgo(6)) a[2] += t.spent || 0; });
+  $('#areaTable').innerHTML = '<tr><th>Vùng</th><th>Đang mở</th><th>Đã xong</th><th>Thời gian 7 ngày</th></tr>' + Object.entries(byA).map(([k, [o, d, s]]) => `<tr><td>${AREA[k]}</td><td>${o}</td><td>${d}</td><td>${dur(s) || '—'}</td></tr>`).join('');
   const byP = {}; T.forEach(t => { const p = t.project || '(không nhãn)'; byP[p] ??= [0, 0]; byP[p][t.status === 'done' ? 1 : 0]++; });
   $('#projTable').innerHTML = Object.keys(byP).length ? '<tr><th>Dự án</th><th>Đang mở</th><th>Đã xong</th></tr>' + Object.entries(byP).map(([p, [o, d]]) => `<tr><td>${esc(p)}</td><td>${o}</td><td>${d}</td></tr>`).join('') : '<tr><td class="muted">Chưa có dữ liệu.</td></tr>';
   $('#lateTable').innerHTML = late.length ? '<tr><th>Việc</th><th>Hạn</th><th>Trễ</th></tr>' + late.map(t => `<tr><td>${esc(t.title)}</td><td>${fmt(t.due)}</td><td class="overdue">${Math.round((new Date(today()) - new Date(t.due)) / 864e5)} ngày</td></tr>`).join('') : '<tr><td class="muted">Không có việc quá hạn 🎉</td></tr>';
@@ -735,6 +953,65 @@ async function initFirebase() {
     }, e => status.textContent = '⚠ ' + e.code);
   });
 }
+
+/* ========== Reminders ========== */
+const at = t => t.due && t.time ? new Date(t.due + 'T' + t.time) : null;
+function calLink(t) {
+  const s = at(t), z = d => d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + '00Z';
+  const dates = s ? z(s) + '/' + z(new Date(s.getTime() + 30 * 60000))
+    : t.due.replaceAll('-', '') + '/' + new Date(new Date(t.due).getTime() + 864e5).toISOString().slice(0, 10).replaceAll('-', '');
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(t.title)
+    + '&dates=' + dates + '&details=' + encodeURIComponent((t.note || '') + (t.project ? '\n#' + t.project : ''));
+}
+const NOTIFIED = 'mywork.notified';
+function toast(t, when) {
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = `<b>⏰ ${esc(t.title)}</b><span class="muted">${when}</span><div class="row"><button class="btn sm primary" data-done>Xong</button><button class="btn sm" data-snooze>Nhắc lại sau 10 phút</button><button class="btn sm ghost" data-close>Đóng</button></div>`;
+  el.addEventListener('click', e => {
+    if (e.target.dataset.done !== undefined) { setStatus(t, 'done'); save(); renderAll(); }
+    if (e.target.dataset.snooze !== undefined) { const n = JSON.parse(localStorage.getItem(NOTIFIED) || '{}'); n[t.id] = Date.now() + 10 * 60000; localStorage.setItem(NOTIFIED, JSON.stringify(n)); }
+    if (e.target.tagName === 'BUTTON') el.remove();
+  });
+  $('#toasts').appendChild(el);
+}
+function checkReminders() {
+  const before = (cfg.remindBefore ?? 15) * 60000, now = Date.now();
+  const n = JSON.parse(localStorage.getItem(NOTIFIED) || '{}');
+  for (const t of state.tasks) {
+    const d = at(t); if (!d || t.status === 'done') continue;
+    const key = t.id + '@' + t.due + t.time, fire = d.getTime() - before;
+    if (now < fire || now > d.getTime() + 3600000) continue;          // not yet, or over 1h late
+    if (n[key] || (n[t.id] && now < n[t.id])) continue;               // already shown / snoozed
+    if (n[t.id] && now >= n[t.id]) delete n[t.id];
+    n[key] = now;
+    const mins = Math.round((d.getTime() - now) / 60000);
+    const when = mins > 0 ? `Còn ${mins} phút (${t.time})` : `Đến giờ (${t.time})`;
+    toast(t, when);
+    if ('Notification' in window && Notification.permission === 'granted') {
+      try { new Notification('⏰ ' + t.title, { body: when, tag: key }); } catch {}
+    }
+  }
+  for (const k in n) if (typeof n[k] === 'number' && now - n[k] > 7 * 864e5) delete n[k];
+  localStorage.setItem(NOTIFIED, JSON.stringify(n));
+}
+function renderNotifState() {
+  const p = 'Notification' in window ? Notification.permission : 'unsupported';
+  $('#notifState').textContent = { granted: '✓ Đã bật thông báo trình duyệt trên máy này.', denied: '⚠ Trình duyệt đang chặn thông báo. Mở biểu tượng ổ khoá cạnh thanh địa chỉ để cho phép.', default: 'Chưa bật thông báo trình duyệt — chỉ hiện nhắc trong app.', unsupported: 'Trình duyệt này không hỗ trợ thông báo — chỉ hiện nhắc trong app.' }[p];
+  $('#notifBtn').hidden = p !== 'default';
+}
+$('#capacity').value = cfg.capacity ?? ''; $('#focusLen').value = cfg.focusLen ?? '';
+$('#saveCap').addEventListener('click', () => {
+  const c = +$('#capacity').value, l = +$('#focusLen').value;
+  cfg.capacity = c > 0 ? c : undefined; cfg.focusLen = l > 0 ? l : undefined; saveCfg(); alert('Đã lưu.'); renderBoard();
+});
+$('#areaFilter').value = cfg.area || ''; if (cfg.area) $('#addForm').elements.area.value = cfg.area;
+$('#remindBefore').value = cfg.remindBefore ?? '';
+$('#saveRemind').addEventListener('click', () => { const v = $('#remindBefore').value; cfg.remindBefore = v === '' ? undefined : Math.max(0, +v); saveCfg(); alert('Đã lưu.'); checkReminders(); });
+$('#notifBtn').addEventListener('click', async () => { await Notification.requestPermission(); renderNotifState(); });
+renderNotifState();
+setInterval(checkReminders, 30000);
+setTimeout(checkReminders, 2000);
 
 applyTheme(); renderAll();
 initFirebase().catch(e => { $('#syncStatus').textContent = '⚠ Không tải được Firebase'; console.error(e); });
